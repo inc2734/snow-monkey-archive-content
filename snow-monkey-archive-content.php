@@ -2,7 +2,7 @@
 /**
  * Plugin name: Snow Monkey Archive Content
  * Description: Require Snow Monkey v7.9 or more
- * Version: 0.3.0
+ * Version: 0.4.0
  * Author: inc2734
  * Author URI: https://2inc.org
  * License: GPL2 or later
@@ -38,7 +38,9 @@ class Bootstrap {
 				function() {
 					?>
 					<div class="notice notice-warning is-dismissible">
-						<p><?php _e( '[Snow Monkey Archive Content] Needs the Snow Monkey.', 'snow-monkey-archive-content' ); ?></p>
+						<p>
+							<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey.', 'snow-monkey-archive-content' ); ?>
+						</p>
 					</div>
 					<?php
 				}
@@ -52,7 +54,9 @@ class Bootstrap {
 				function() {
 					?>
 					<div class="notice notice-warning is-dismissible">
-						<p><?php _e( '[Snow Monkey Archive Content] Needs the Snow Monkey v7.9 or more.', 'snow-monkey-archive-content' ); ?></p>
+						<p>
+							<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey v7.9 or more.', 'snow-monkey-archive-content' ); ?>
+						</p>
 					</div>
 					<?php
 				}
@@ -66,7 +70,9 @@ class Bootstrap {
 				function() {
 					?>
 					<div class="notice notice-warning is-dismissible">
-						<p><?php _e( '[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey Category Content. Stop the Snow Monkey Category Content.', 'snow-monkey-archive-content' ); ?></p>
+						<p>
+							<?php esc_html_e( '[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey Category Content. Stop the Snow Monkey Category Content.', 'snow-monkey-archive-content' ); ?>
+						</p>
 					</div>
 					<?php
 				}
