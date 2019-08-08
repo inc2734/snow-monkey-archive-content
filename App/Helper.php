@@ -123,7 +123,7 @@ class Helper {
 		$terms = [];
 
 		foreach ( $theme_mods as $key => $value ) {
-			if ( ! preg_match( '/^snow-monkey-archive-content/term/(.+?)/(\d+?)/page-id$/', $key, $matches ) ) {
+			if ( ! preg_match( '|^snow-monkey-archive-content/term/(.+?)/(\d+?)/page-id$|', $key, $matches ) ) {
 				continue;
 			}
 
@@ -167,7 +167,7 @@ class Helper {
 		$custom_post_types = [];
 
 		foreach ( $theme_mods as $key => $value ) {
-			if ( ! preg_match( '/^snow-monkey-archive-content/custom-post-types/(.+)/page-id$/', $key, $matches ) ) {
+			if ( ! preg_match( '|^snow-monkey-archive-content/custom-post-types/(.+)/page-id$|', $key, $matches ) ) {
 				continue;
 			}
 
