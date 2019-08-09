@@ -63,14 +63,20 @@ class Front {
 
 		$query = new \WP_Query(
 			[
-				'page_id' => $page_id,
+				'page_id'     => $page_id,
+				'post_status' => get_post_status( $page_id ),
 			]
 		);
+
+		if ( ! $query->have_posts() ) {
+			return $html;
+		}
 
 		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
 		global $wp_query;
 		$the_is_singular = $wp_query->is_singular();
 
+		$content = '';
 		while ( $query->have_posts() ) {
 			$query->the_post();
 			$wp_query->is_singular = true;
