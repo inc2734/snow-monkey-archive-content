@@ -1,6 +1,6 @@
 <?php
 /**
- * @package snow-monkey-member-post
+ * @package snow-monkey-archive-content
  * @author inc2734
  * @license GPL-2.0+
  */

@@ -12,27 +12,32 @@ use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 class Front {
 
 	public function __construct() {
-		if ( is_search() ) {
-			return;
-		}
+		add_action(
+			'wp',
+			function() {
+				if ( is_search() ) {
+					return;
+				}
 
-		if ( ! is_category() && ! is_tag() && ! is_tax() && ! is_post_type_archive() && ! is_home() ) {
-			return;
-		}
+				if ( ! is_category() && ! is_tag() && ! is_tax() && ! is_post_type_archive() && ! is_home() ) {
+					return;
+				}
 
-		$apply_paged = apply_filters( 'snow_monkey_archive_content_apply_paged', ! is_paged() );
-		if ( ! $apply_paged ) {
-			return;
-		}
+				$apply_paged = apply_filters( 'snow_monkey_archive_content_apply_paged', ! is_paged() );
+				if ( ! $apply_paged ) {
+					return;
+				}
 
-		add_filter( 'snow_monkey_template_part_render', [ $this, '_replace_content' ], 10, 2 );
-		add_filter( 'document_title_parts', [ $this, '_replace_title' ] );
+				add_filter( 'snow_monkey_template_part_render', [ $this, '_replace_content' ], 10, 2 );
+				add_filter( 'document_title_parts', [ $this, '_replace_title' ] );
 
-		add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
-		add_action( 'wp_head', [ $this, '_hide_page_title' ] );
-		add_action( 'wp_head', [ $this, '_remove_top_margin' ] );
-		add_action( 'wp_head', [ $this, '_remove_term_description' ] );
-		add_action( 'admin_bar_menu', [ $this, '_admin_bar_menu' ], 100 );
+				add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
+				add_action( 'wp_head', [ $this, '_hide_page_title' ] );
+				add_action( 'wp_head', [ $this, '_remove_top_margin' ] );
+				add_action( 'wp_head', [ $this, '_remove_term_description' ] );
+				add_action( 'admin_bar_menu', [ $this, '_admin_bar_menu' ], 100 );
+			}
+		);
 	}
 
 	/**

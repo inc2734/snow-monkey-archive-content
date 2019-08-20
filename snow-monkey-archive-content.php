@@ -17,7 +17,6 @@
 namespace Snow_Monkey\Plugin\ArchiveContent;
 
 use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
-use Framework;
 
 define( 'SNOW_MONKEY_ARCHIVE_CONTENT_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'SNOW_MONKEY_ARCHIVE_CONTENT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
@@ -31,60 +30,12 @@ class Bootstrap {
 	public function _plugins_loaded() {
 		load_plugin_textdomain( 'snow-monkey-archive-content', false, basename( __DIR__ ) . '/languages' );
 
-		$theme = wp_get_theme( get_template() );
-		if ( 'snow-monkey' !== $theme->template && 'snow-monkey/resources' !== $theme->template ) {
-			add_action(
-				'admin_notices',
-				function() {
-					?>
-					<div class="notice notice-warning is-dismissible">
-						<p>
-							<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey.', 'snow-monkey-archive-content' ); ?>
-						</p>
-					</div>
-					<?php
-				}
-			);
-			return;
-		}
-
-		if ( ! version_compare( $theme->get( 'Version' ), '7.9.0', '>=' ) ) {
-			add_action(
-				'admin_notices',
-				function() {
-					?>
-					<div class="notice notice-warning is-dismissible">
-						<p>
-							<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey v7.9 or more.', 'snow-monkey-archive-content' ); ?>
-						</p>
-					</div>
-					<?php
-				}
-			);
-			return;
-		}
-
-		if ( class_exists( '\Snow_Monkey\Plugin\CategoryContent\Bootstrap' ) ) {
-			add_action(
-				'admin_notices',
-				function() {
-					?>
-					<div class="notice notice-warning is-dismissible">
-						<p>
-							<?php esc_html_e( '[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey Category Content. Stop the Snow Monkey Category Content.', 'snow-monkey-archive-content' ); ?>
-						</p>
-					</div>
-					<?php
-				}
-			);
-			return;
-		}
-
 		add_action( 'init', [ $this, '_activate_autoupdate' ] );
-		add_action( 'snow_monkey_post_load_customizer', [ $this, '_load_customizer' ] );
-		add_action( 'wp', [ $this, '_front_hooks' ] );
 
+		new App\Controller\Front();
+		new App\Controller\Admin();
 		new App\Controller\Edit();
+		new App\Controller\Customizer();
 	}
 
 	/**
@@ -98,22 +49,6 @@ class Bootstrap {
 			'inc2734',
 			'snow-monkey-archive-content'
 		);
-	}
-
-	/**
-	 * Loads customizer
-	 */
-	public function _load_customizer() {
-		Helper::load( SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/customizer' );
-	}
-
-	/**
-	 * Setup for front page
-	 *
-	 * @return void
-	 */
-	public function _front_hooks() {
-		new App\Controller\Front();
 	}
 }
 
@@ -152,5 +87,4 @@ function uninstall_callback() {
 	remove_theme_mod( Helper::get_home_meta_name( 'display-title' ) );
 	remove_theme_mod( Helper::get_home_meta_name( 'remove-top-margin' ) );
 }
-
 register_uninstall_hook( __FILE__, 'uninstall_callback' );
