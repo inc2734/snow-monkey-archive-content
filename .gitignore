@@ -2,7 +2,7 @@
 .sass-cache/
 npm-debug.log
 node_modules/
-vendor/
+/vendor/
 dist/
 *.sql
 snow-monkey-archive-content/
