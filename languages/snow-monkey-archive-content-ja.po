@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Snow Monkey Category Content\n"
-"POT-Creation-Date: 2019-08-09 09:22+0900\n"
-"PO-Revision-Date: 2019-08-09 09:23+0900\n"
+"POT-Creation-Date: 2019-08-27 22:31+0900\n"
+"PO-Revision-Date: 2019-08-27 22:32+0900\n"
 "Last-Translator: inc2734 <inc@2inc.org>\n"
 "Language-Team: inc2734 <inc@2inc.org>\n"
 "Language: ja\n"
@@ -20,25 +20,33 @@ msgstr ""
 "_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: .themes\n"
+"X-Poedit-SearchPathExcluded-2: vendor\n"
 
-#: App/Controller/Edit.php:41
+#: App/Controller/Edit.php:42
 #, php-format
 msgid "Assigned %1$s: %2$s"
 msgstr "割り当て %1$s: %2$s"
 
-#: App/Controller/Edit.php:68
+#: App/Controller/Edit.php:69
 #, php-format
 msgid "Assigned %1$s archive"
 msgstr "割り当て %1$s アーカイブ"
 
-#: App/Controller/Edit.php:92
+#: App/Controller/Edit.php:95
+#, php-format
+msgid "Assigned author: %1$s"
+msgstr "割り当て 著者: %1$s"
+
+#: App/Controller/Edit.php:119
 msgid "Assigned posts page"
 msgstr "割り当て 投稿ページ"
 
-#: App/Controller/Front.php:246
+#: App/Controller/Front.php:269
 msgid "Edit the page used as content"
 msgstr "コンテンツ用ページを編集"
 
+#: customizer/design/sections/author/controls/display-title.php:19
 #: customizer/design/sections/category/controls/display-title.php:19
 #: customizer/design/sections/custom-post-archive/controls/display-title.php:19
 #: customizer/design/sections/custom-taxonomy/controls/display-title.php:23
@@ -47,6 +55,7 @@ msgstr "コンテンツ用ページを編集"
 msgid "Display page title"
 msgstr "ページタイトルを表示"
 
+#: customizer/design/sections/author/controls/page-id.php:16
 #: customizer/design/sections/category/controls/page-id.php:16
 #: customizer/design/sections/custom-post-archive/controls/page-id.php:17
 #: customizer/design/sections/custom-taxonomy/controls/page-id.php:21
@@ -55,6 +64,7 @@ msgstr "ページタイトルを表示"
 msgid "None"
 msgstr "なし"
 
+#: customizer/design/sections/author/controls/page-id.php:27
 #: customizer/design/sections/category/controls/page-id.php:27
 #: customizer/design/sections/custom-post-archive/controls/page-id.php:28
 #: customizer/design/sections/custom-taxonomy/controls/page-id.php:32
@@ -63,6 +73,7 @@ msgstr "なし"
 msgid "The page used as content"
 msgstr "コンテンツとして使用されるページ"
 
+#: customizer/design/sections/author/controls/page-id.php:28
 #: customizer/design/sections/category/controls/page-id.php:28
 #: customizer/design/sections/custom-post-archive/controls/page-id.php:29
 #: customizer/design/sections/custom-taxonomy/controls/page-id.php:33
@@ -71,6 +82,7 @@ msgstr "コンテンツとして使用されるページ"
 msgid "You can select from the draft pages."
 msgstr "下書きの固定ページから選択できます。"
 
+#: customizer/design/sections/author/controls/remove-top-margin.php:19
 #: customizer/design/sections/category/controls/remove-top-margin.php:19
 #: customizer/design/sections/custom-post-archive/controls/remove-top-margin.php:19
 #: customizer/design/sections/custom-taxonomy/controls/remove-top-margin.php:23
@@ -79,15 +91,15 @@ msgstr "下書きの固定ページから選択できます。"
 msgid "Remove top margin of the content"
 msgstr "コンテンツ上部の余白を削除"
 
-#: snow-monkey-archive-content.php:42
+#: snow-monkey-archive-content.php:73
 msgid "[Snow Monkey Archive Content] Needs the Snow Monkey."
 msgstr "[Snow Monkey Archive Content] Snow Monkey が必要です。"
 
-#: snow-monkey-archive-content.php:58
+#: snow-monkey-archive-content.php:83
 msgid "[Snow Monkey Archive Content] Needs the Snow Monkey v7.9 or more."
 msgstr "[Snow Monkey Archive Content] Snow Monkey v7.9 以上が必要です。"
 
-#: snow-monkey-archive-content.php:74
+#: snow-monkey-archive-content.php:93
 msgid ""
 "[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey "
 "Category Content. Stop the Snow Monkey Category Content."

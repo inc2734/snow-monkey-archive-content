@@ -106,9 +106,11 @@ new Bootstrap();
  * @return void
  */
 function uninstall_callback() {
-	$categories = Helper::get_terms( 'category' );
-	$post_tags  = Helper::get_terms( 'post_tag' );
-	$terms      = array_merge( $categories, $post_tags );
+	$categories        = Helper::get_terms( 'category' );
+	$post_tags         = Helper::get_terms( 'post_tag' );
+	$terms             = array_merge( $categories, $post_tags );
+	$custom_post_types = Helper::get_custom_post_types();
+	$users             = Helper::get_users();
 
 	$taxonomies = Helper::get_taxonomies();
 	foreach ( $taxonomies as $_taxonomy ) {
@@ -121,11 +123,16 @@ function uninstall_callback() {
 		remove_theme_mod( Helper::get_term_meta_name( 'remove-top-margin', $term ) );
 	}
 
-	$custom_post_types = Helper::get_custom_post_types();
 	foreach ( $custom_post_types as $custom_post_type ) {
 		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ) );
 		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'display-title', $custom_post_type ) );
 		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'remove-top-margin', $custom_post_type ) );
+	}
+
+	foreach ( $users as $user ) {
+		remove_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );
+		remove_theme_mod( Helper::get_author_meta_name( 'display-title', $user ) );
+		remove_theme_mod( Helper::get_author_meta_name( 'remove-top-margin', $user ) );
 	}
 
 	remove_theme_mod( Helper::get_home_meta_name( 'page-id' ) );

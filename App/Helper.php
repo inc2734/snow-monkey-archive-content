@@ -59,6 +59,15 @@ class Helper {
 	}
 
 	/**
+	 * Return all users
+	 *
+	 * @return array
+	 */
+	public static function get_users() {
+		return Snow_Monkey_Helper::get_users();
+	}
+
+	/**
 	 * Return all custom post types
 	 *
 	 * @return array
@@ -106,6 +115,17 @@ class Helper {
 	 */
 	public static function get_term_meta_name( $key, $term ) {
 		return 'snow-monkey-archive-content/term/' . $term->taxonomy . '/' . $term->term_id . '/' . $key;
+	}
+
+	/**
+	 * Return meta name of the user
+	 *
+	 * @param string $key
+	 * @param WP_User $user
+	 * @return string
+	 */
+	public static function get_author_meta_name( $key, $user ) {
+		return 'snow-monkey-archive-content/author/' . $user->ID . '/' . $key;
 	}
 
 	/**
@@ -193,6 +213,50 @@ class Helper {
 		$assigned_custom_post_types = static::get_assigned_custom_post_types();
 		if ( isset( $assigned_custom_post_types[ $page_id ] ) ) {
 			return $assigned_custom_post_types[ $page_id ];
+		}
+	}
+
+	/**
+	 * Return array of assigned users
+	 *
+	 * @return array
+	 */
+	protected static function get_assigned_users() {
+		$users = wp_cache_get( 'snow-monkey-archive-content', 'users' );
+		if ( false !== $users ) {
+			return $users;
+		}
+
+		$theme_mods = get_theme_mods();
+		$users = [];
+
+		foreach ( $theme_mods as $key => $value ) {
+			if ( ! preg_match( '|^snow-monkey-archive-content/author/(.+)/page-id$|', $key, $matches ) ) {
+				continue;
+			}
+
+			$user = get_user_by( 'id', $matches[1] );
+			if ( ! $user ) {
+				continue;
+			}
+
+			$users[ $value ] = $user;
+		}
+
+		wp_cache_set( 'snow-monkey-archive-content', $users, 'users' );
+		return $users;
+	}
+
+	/**
+	 * Return assigned author
+	 *
+	 * @param int $page_id
+	 * @return null|object
+	 */
+	public static function get_user_by_page_id( $page_id ) {
+		$assigned_users = static::get_assigned_users();
+		if ( isset( $assigned_users[ $page_id ] ) ) {
+			return $assigned_users[ $page_id ];
 		}
 	}
 

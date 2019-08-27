@@ -14,6 +14,7 @@ class Edit {
 	public function __construct() {
 		add_filter( 'display_post_states', [ $this, '_display_assigned_term' ], 10, 2 );
 		add_filter( 'display_post_states', [ $this, '_display_assigned_custom_post_type' ], 10, 2 );
+		add_filter( 'display_post_states', [ $this, '_display_assigned_user' ], 10, 2 );
 		add_filter( 'display_post_states', [ $this, '_display_assigned_home' ], 10, 2 );
 	}
 
@@ -64,9 +65,35 @@ class Edit {
 		}
 
 		$post_states[] = sprintf(
-			/* translators: %1: Taxonomy label, %2: Term name */
+			/* translators: %1: Custom post type label */
 			esc_html__( 'Assigned %1$s archive', 'snow-monkey-archive-content' ),
 			$custom_post_type->label
+		);
+
+		return $post_states;
+	}
+
+	/**
+	 * Add post status comment
+	 *
+	 * @param array $post_states
+	 * @param WP_Post $post
+	 * @return array
+	 */
+	public function _display_assigned_user( $post_states, $post ) {
+		if ( ! $this->_is_draft_page( $post->post_type, $post_states ) ) {
+			return $post_states;
+		}
+
+		$user = Helper::get_user_by_page_id( $post->ID );
+		if ( ! $user ) {
+			return $post_states;
+		}
+
+		$post_states[] = sprintf(
+			/* translators: %1: Display name */
+			esc_html__( 'Assigned author: %1$s', 'snow-monkey-archive-content' ),
+			get_the_author_meta( 'display_name', $user->ID )
 		);
 
 		return $post_states;
