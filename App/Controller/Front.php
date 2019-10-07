@@ -60,7 +60,7 @@ class Front {
 
 		$page_id = $this->_get_assigned_page_id();
 		if ( ! $page_id ) {
-			return;
+			return $html;
 		}
 
 		query_posts(
