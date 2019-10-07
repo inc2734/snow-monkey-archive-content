@@ -36,6 +36,12 @@ class Front {
 				add_action( 'wp_head', [ $this, '_remove_top_margin' ] );
 				add_action( 'wp_head', [ $this, '_remove_term_description' ] );
 				add_action( 'admin_bar_menu', [ $this, '_admin_bar_menu' ], 100 );
+
+				add_filter( 'inc2734_wp_ogp_title', [ $this, '_ogp_title' ], 11 );
+				add_filter( 'inc2734_wp_ogp_description', [ $this, '_ogp_description' ], 11 );
+				add_filter( 'inc2734_wp_ogp_image', [ $this, '_ogp_image' ], 11 );
+				add_filter( 'inc2734_wp_seo_description', [ $this, '_seo_description' ], 11 );
+				add_filter( 'inc2734_wp_seo_thumbnail', [ $this, '_seo_thumbnail' ], 11 );
 			}
 		);
 	}
@@ -52,49 +58,30 @@ class Front {
 			return $html;
 		}
 
-		if ( is_category() || is_tag() || is_tax() ) {
-			$term    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
-		} elseif ( is_post_type_archive() ) {
-			$post_type_object = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $post_type_object->name ) );
-		} elseif ( is_author() ) {
-			$user    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );
-		} elseif ( is_home() ) {
-			$page_id = get_theme_mod( Helper::get_home_meta_name( 'page-id' ) );
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return;
 		}
 
-		if ( ! $page_id || 'draft' !== get_post_status( $page_id ) ) {
-			return $html;
-		}
-
-		$query = new \WP_Query(
+		query_posts(
 			[
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
 			]
 		);
 
-		if ( ! $query->have_posts() ) {
+		if ( ! have_posts() ) {
 			return $html;
 		}
 
-		// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
-		global $wp_query;
-		$the_is_singular = $wp_query->is_singular();
-
 		$content = '';
-		while ( $query->have_posts() ) {
-			$query->the_post();
-			$wp_query->is_singular = true;
+		while ( have_posts() ) {
+			the_post();
 			ob_start();
 			the_content();
 			$content = ob_get_clean();
-			$wp_query->is_singular = $the_is_singular;
 		}
-		wp_reset_postdata();
-		// phpcs:enable
+		wp_reset_query();
 
 		return str_replace(
 			'<div class="c-entry__body">',
@@ -113,20 +100,8 @@ class Front {
 	 * @return array
 	 */
 	public function _replace_title( $title ) {
-		if ( is_category() || is_tag() || is_tax() ) {
-			$term    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
-		} elseif ( is_post_type_archive() ) {
-			$post_type_object = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $post_type_object->name ) );
-		} elseif ( is_author() ) {
-			$user    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );
-		} elseif ( is_home() ) {
-			$page_id = get_theme_mod( Helper::get_home_meta_name( 'page-id' ) );
-		}
-
-		if ( ! $page_id || 'draft' !== get_post_status( $page_id ) ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
 			return $title;
 		}
 
@@ -216,20 +191,8 @@ class Front {
 	 * @return void
 	 */
 	public function _remove_term_description() {
-		if ( is_category() || is_tag() || is_tax() ) {
-			$term    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
-		} elseif ( is_post_type_archive() ) {
-			$post_type_object = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $post_type_object->name ) );
-		} elseif ( is_author() ) {
-			$user    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );
-		} elseif ( is_home() ) {
-			$page_id = get_theme_mod( Helper::get_home_meta_name( 'page-id' ) );
-		}
-
-		if ( ! $page_id || 'draft' !== get_post_status( $page_id ) ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
 			return;
 		}
 		?>
@@ -246,6 +209,119 @@ class Front {
 	 * @return void
 	 */
 	public function _admin_bar_menu( $wp_adminbar ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return;
+		}
+
+		$wp_adminbar->add_node(
+			[
+				'id'    => 'snow-monkey-archive-content-edit-page',
+				'title' => __( 'Edit the page used as content', 'snow-monkey-archive-content' ),
+				'href'  => get_edit_post_link( $page_id, 'url' ),
+			]
+		);
+	}
+
+	/**
+	 * Assign og:title
+	 *
+	 * @param string $title
+	 * @return string
+	 */
+	public function _ogp_title( $title ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return $title;
+		}
+
+		return get_the_title( $page_id );
+	}
+
+	/**
+	 * Assign og:description
+	 *
+	 * @param string $description
+	 * @return string
+	 */
+	public function _ogp_description( $description ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return $description;
+		}
+
+		query_posts( [ 'page_id' => $page_id ] );
+		the_post();
+		$ogp = new \Inc2734\WP_OGP\Bootstrap();
+		$description = $ogp->get_description();
+		wp_reset_query();
+		return $description;
+	}
+
+	/**
+	 * Assign og:image
+	 *
+	 * @param string $image
+	 * @return string
+	 */
+	public function _ogp_image( $image ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return $image;
+		}
+
+		query_posts( [ 'page_id' => $page_id ] );
+		the_post();
+		$ogp = new \Inc2734\WP_OGP\Bootstrap();
+		$image = $ogp->get_image();
+		wp_reset_query();
+		return $image;
+	}
+
+	/**
+	 * Assign meta description
+	 *
+	 * @param string $description
+	 * @return string
+	 */
+	public function _seo_description( $description ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return $description;
+		}
+
+		query_posts( [ 'page_id' => $page_id ] );
+		the_post();
+		$description = \Inc2734\WP_SEO\Helper::get_the_description( $page_id );
+		wp_reset_query();
+		return $description;
+	}
+
+	/**
+	 * Assign meta thumbnail
+	 *
+	 * @param string $description
+	 * @return string
+	 */
+	public function _seo_thumbnail( $thumbnail ) {
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return $thumbnail;
+		}
+
+		query_posts( [ 'page_id' => $page_id ] );
+		the_post();
+		$thumbnail = \Inc2734\WP_SEO\Helper::get_the_thumbnail( $page_id );
+		wp_reset_query();
+		return $thumbnail;
+	}
+
+	/**
+	 * Return assigned page id
+	 *
+	 * @return int|false
+	 */
+	protected function _get_assigned_page_id() {
 		if ( is_category() || is_tag() || is_tax() ) {
 			$term    = get_queried_object();
 			$page_id = get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
@@ -259,16 +335,10 @@ class Front {
 			$page_id = get_theme_mod( Helper::get_home_meta_name( 'page-id' ) );
 		}
 
-		if ( ! $page_id || 'draft' !== get_post_status( $page_id ) ) {
-			return;
+		if ( empty( $page_id ) || 'draft' !== get_post_status( $page_id ) ) {
+			return false;
 		}
 
-		$wp_adminbar->add_node(
-			[
-				'id'    => 'snow-monkey-archive-content-edit-page',
-				'title' => __( 'Edit the page used as content', 'snow-monkey-archive-content' ),
-				'href'  => get_edit_post_link( $page_id, 'url' ),
-			]
-		);
+		return $page_id;
 	}
 }

@@ -38,7 +38,7 @@ class Bootstrap {
 			return;
 		}
 
-		if ( ! version_compare( $theme->get( 'Version' ), '7.10.0', '>=' ) ) {
+		if ( ! version_compare( $theme->get( 'Version' ), '7.13.2', '>=' ) ) {
 			add_action( 'admin_notices', [ $this, '_admin_notice_invalid_snow_monkey_version' ] );
 			return;
 		}
@@ -80,7 +80,7 @@ class Bootstrap {
 		?>
 		<div class="notice notice-warning is-dismissible">
 			<p>
-				<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey v7.9 or more.', 'snow-monkey-archive-content' ); ?>
+				<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey v7.13.2 or more.', 'snow-monkey-archive-content' ); ?>
 			</p>
 		</div>
 		<?php
