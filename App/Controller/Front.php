@@ -250,10 +250,24 @@ class Front {
 			return $description;
 		}
 
-		query_posts( [ 'page_id' => $page_id ] );
-		the_post();
-		$ogp = new \Inc2734\WP_OGP\Bootstrap();
-		$description = $ogp->get_description();
+		if ( is_singular() ) {
+			return $description;
+		}
+
+		query_posts(
+			[
+				'page_id'     => $page_id,
+				'post_status' => get_post_status( $page_id ),
+			]
+		);
+		while ( have_posts() ) {
+			the_post();
+			$ogp = new \Inc2734\WP_OGP\Bootstrap();
+			$page_description = $ogp->get_description();
+			if ( $page_description && get_bloginfo( 'description' ) !== $page_description ) {
+				$description = $page_description;
+			}
+		}
 		wp_reset_query();
 		return $description;
 	}
@@ -270,10 +284,17 @@ class Front {
 			return $image;
 		}
 
-		query_posts( [ 'page_id' => $page_id ] );
-		the_post();
-		$ogp = new \Inc2734\WP_OGP\Bootstrap();
-		$image = $ogp->get_image();
+		query_posts(
+			[
+				'page_id'     => $page_id,
+				'post_status' => get_post_status( $page_id ),
+			]
+		);
+		while ( have_posts() ) {
+			the_post();
+			$ogp = new \Inc2734\WP_OGP\Bootstrap();
+			$image = $ogp->get_image();
+		}
 		wp_reset_query();
 		return $image;
 	}
@@ -290,9 +311,23 @@ class Front {
 			return $description;
 		}
 
-		query_posts( [ 'page_id' => $page_id ] );
-		the_post();
-		$description = \Inc2734\WP_SEO\Helper::get_the_description( $page_id );
+		if ( is_singular() ) {
+			return $description;
+		}
+
+		query_posts(
+			[
+				'page_id'     => $page_id,
+				'post_status' => get_post_status( $page_id ),
+			]
+		);
+		while ( have_posts() ) {
+			the_post();
+			$page_description = \Inc2734\WP_SEO\Helper::get_the_description( $page_id );
+			if ( $page_description && get_bloginfo( 'description' ) !== $page_description ) {
+				$description = $page_description;
+			}
+		}
 		wp_reset_query();
 		return $description;
 	}
@@ -309,9 +344,16 @@ class Front {
 			return $thumbnail;
 		}
 
-		query_posts( [ 'page_id' => $page_id ] );
-		the_post();
-		$thumbnail = \Inc2734\WP_SEO\Helper::get_the_thumbnail( $page_id );
+		query_posts(
+			[
+				'page_id'     => $page_id,
+				'post_status' => get_post_status( $page_id ),
+			]
+		);
+		while ( have_posts() ) {
+			the_post();
+			$thumbnail = \Inc2734\WP_SEO\Helper::get_the_thumbnail( $page_id );
+		}
 		wp_reset_query();
 		return $thumbnail;
 	}
