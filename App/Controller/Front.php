@@ -121,9 +121,9 @@ class Front {
 
 		wp_enqueue_style(
 			'snow-monkey-archive-content',
-			SNOW_MONKEY_ARCHIVE_CONTENT_URL . '/dist/css/app.min.css',
-			[],
-			filemtime( SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/dist/css/app.min.css' )
+			SNOW_MONKEY_ARCHIVE_CONTENT_URL . '/dist/css/app.css',
+			[ \Framework\Helper::get_main_style_handle() ],
+			filemtime( SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/dist/css/app.css' )
 		);
 	}
 
