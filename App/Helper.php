@@ -12,21 +12,6 @@ use Framework\Helper as Snow_Monkey_Helper;
 class Helper {
 
 	/**
-	 * Load files
-	 *
-	 * @param string $directory
-	 */
-	public static function load( $directory ) {
-		foreach ( glob( untrailingslashit( $directory ) . '/*' ) as $file ) {
-			if ( is_dir( $file ) ) {
-				static::load( $file );
-			} else {
-				require_once( $file );
-			}
-		}
-	}
-
-	/**
 	 * Return draft root pages
 	 *
 	 * @return array
