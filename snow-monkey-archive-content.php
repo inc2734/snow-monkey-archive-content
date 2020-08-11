@@ -3,6 +3,9 @@
  * Plugin name: Snow Monkey Archive Content
  * Description: Require Snow Monkey v7.9 or more
  * Version: 0.7.0
+ * Tested up to: 5.5
+ * Requires at least: 5.5
+ * Requires PHP: 5.6
  * Author: inc2734
  * Author URI: https://2inc.org
  * License: GPL2 or later
@@ -62,7 +65,10 @@ class Bootstrap {
 		new \Inc2734\WP_GitHub_Plugin_Updater\Bootstrap(
 			plugin_basename( __FILE__ ),
 			'inc2734',
-			'snow-monkey-archive-content'
+			'snow-monkey-archive-content',
+			[
+				'homepage' => 'https://snow-monkey.2inc.org',
+			]
 		);
 	}
 

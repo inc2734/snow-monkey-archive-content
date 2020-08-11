@@ -3,7 +3,7 @@
  * @package snow-monkey
  * @author inc2734
  * @license GPL-2.0+
- * @version 6.0.0
+ * @version 10.7.1
  */
 
 namespace Framework\Contract\Helper;
@@ -16,18 +16,23 @@ trait Page_Header {
 	 * @return string
 	 */
 	protected static function _get_page_header_class() {
-		$cache = wp_cache_get( 'page_header_class', '\Framework\Contract\Helper\Page_Header' );
-		if ( false !== $cache ) {
+		$cache_key   = md5( json_encode( get_queried_object() ) );
+		$cache_group = 'snow-monkey/page_header_class';
+		$cache       = wp_cache_get( $cache_key, $cache_group );
+
+		if ( false !== $cache && class_exists( $cache ) ) {
 			return $cache;
 		}
 
 		$class = static::_get_page_header_class_no_cache();
-		wp_cache_set( 'page_header_class', $class, '\Framework\Contract\Helper\Page_Header' );
+		wp_cache_set( $cache_key, $class, $cache_group );
 		return $class;
 	}
 
 	/**
 	 * Return page header class
+	 *
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
 	 * @return string
 	 */
@@ -35,10 +40,12 @@ trait Page_Header {
 		$custom_post_types = \Framework\Helper::get_custom_post_types();
 		$types = array_filter(
 			[
-				'Default'  => is_search() || is_404(),
-				'Singular' => is_singular( array_merge( [ 'post' ], $custom_post_types ) ) || is_page() && ! is_front_page(),
-				'Category' => is_category(),
-				'Home'     => is_home() || ( is_archive() && ! is_post_type_archive() && ! is_tax() ),
+				'Default'            => is_search() || is_404(),
+				'WooCommerce_Single' => class_exists( '\woocommerce' ) && is_product(),
+				'Singular'           => is_singular( array_merge( [ 'post' ], $custom_post_types ) ) || is_page() && ! is_front_page(),
+				'Category'           => is_category(),
+				'Archive'            => is_home() || ( is_archive() && ! is_post_type_archive() && ! is_tax() ),
+				'Front'              => is_front_page() && ! is_home(),
 			]
 		);
 
@@ -57,6 +64,8 @@ trait Page_Header {
 	/**
 	 * Returns page header image url
 	 *
+	 * @SuppressWarnings(PHPMD.UndefinedVariable)
+	 *
 	 * @deprecated
 	 *
 	 * @return string
@@ -72,13 +81,15 @@ trait Page_Header {
 			return;
 		}
 
-		if ( ! preg_match( '@ data-src="([^"]*?)"@', $image, $matches ) ) {
-			if ( ! preg_match( '@ src="([^"]*?)"@', $image, $matches ) ) {
-				return false;
-			}
+		if ( preg_match( '@ data-src="([^"]*?)"@', $image, $matches ) ) {
+			return $matches[1];
 		}
 
-		return $matches[1];
+		if ( preg_match( '@ src="([^"]*?)"@', $image, $matches ) ) {
+			return $matches[1];
+		}
+
+		return false;
 	}
 
 	/**
@@ -88,7 +99,7 @@ trait Page_Header {
 	 */
 	public static function get_page_header_image() {
 		$url = apply_filters( 'snow_monkey_pre_page_header_image_url', null );
-		if ( ! $url ) {
+		if ( null === $url ) {
 			// @deprecated
 			$url = apply_filters( 'snow_monkey_page_header_image_url', $url );
 			if ( has_filter( 'snow_monkey_page_header_image_url' ) ) {
@@ -99,6 +110,10 @@ trait Page_Header {
 			}
 		}
 
+		if ( false === $url ) {
+			return;
+		}
+
 		if ( $url ) {
 			return sprintf(
 				'<img src="%1$s" alt="">',
@@ -107,20 +122,11 @@ trait Page_Header {
 		}
 
 		$class = static::_get_page_header_class();
-		if ( ! $class ) {
+		if ( ! $class || ! $class::is_display_image() ) {
 			return;
 		}
 
-		$is_singular        = false !== strpos( $class, '\Singular_Page_Header' );
-		$is_displayed_image = in_array( get_theme_mod( get_post_type() . '-eyecatch' ), [ 'page-header', 'title-on-page-header' ] );
-
-		if ( $is_singular && ! $is_displayed_image ) {
-			return;
-		}
-
-		ob_start();
-		$class::the_image();
-		return ob_get_clean();
+		return $class::get_the_image();
 	}
 
 	/**
@@ -146,10 +152,8 @@ trait Page_Header {
 	public static function is_output_page_header_title() {
 		$return = false;
 
-		$is_singular        = false !== strpos( static::_get_page_header_class(), '\Singular_Page_Header' );
-		$is_displayed_title = in_array( get_theme_mod( get_post_type() . '-eyecatch' ), [ 'title-on-page-header' ] );
-
-		if ( $is_singular && $is_displayed_title ) {
+		$class = static::_get_page_header_class();
+		if ( $class && $class::is_display_title() ) {
 			$return = true;
 		}
 

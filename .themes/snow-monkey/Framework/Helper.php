@@ -3,18 +3,23 @@
  * @package snow-monkey
  * @author inc2734
  * @license GPL-2.0+
- * @version 7.10.0
+ * @version 11.0.0
  */
 
 namespace Framework;
 
-use Inc2734\Mimizuku_Core;
+use Inc2734\WP_Helper;
 use Inc2734\WP_Breadcrumbs;
+use Inc2734\WP_View_Controller;
 
 class Helper {
 
-	use Mimizuku_Core\App\Contract\Helper\Helper;
+	use WP_Helper\Contract\Helper;
 	use Contract\Helper\Page_Header;
+	use Contract\Helper\Category_Thumbnail;
+	use Contract\Helper\Homepage_Thumbnail;
+	use Contract\Helper\Deprecated;
+	use WP_View_Controller\App\Contract\Template_Tag;
 
 	/**
 	 * Return output positions of eyecatch
@@ -28,28 +33,6 @@ class Helper {
 			'content-top'          => __( 'Top of contents', 'snow-monkey' ),
 			'none'                 => __( 'None', 'snow-monkey' ),
 		];
-	}
-
-	/**
-	 * Return default header position
-	 *
-	 * @return string
-	 */
-	public static function get_default_header_position() {
-		return get_theme_mod( 'header-position' );
-	}
-
-	/**
-	 * Return header position
-	 *
-	 * @return string
-	 */
-	public static function get_header_position() {
-		if ( ! wp_is_mobile() && get_theme_mod( 'header-position-only-mobile' ) ) {
-			return;
-		}
-
-		return static::get_default_header_position();
 	}
 
 	/**
@@ -67,17 +50,30 @@ class Helper {
 	/**
 	 * Return trimed title
 	 *
+	 * @param string|null $title
 	 * @return void
 	 */
-	public static function the_title_trimed() {
-		$num_words = apply_filters( 'snow_monkey_entry_summary_title_num_words', class_exists( 'multibyte_patch' ) ? 40 : 80 );
+	public static function the_title_trimed( $title = null ) {
+		// phpcs:disable WordPress.WP.I18n.MissingArgDomain
+		$num_words = 80;
+		$excerpt_length_ratio = 55 / _x( '55', 'excerpt_length' );
+		$num_words = apply_filters( 'snow_monkey_entry_summary_title_num_words', $num_words * $excerpt_length_ratio );
+		// phpcs:enable
 		if ( $num_words ) {
-			ob_start();
-			the_title();
-			$title = wp_trim_words( ob_get_clean(), $num_words );
+			if ( is_null( $title ) ) {
+				ob_start();
+				the_title();
+				$title = ob_get_clean();
+			}
+
+			$title = wp_trim_words( $title, $num_words );
 			echo esc_html( $title );
 		} else {
-			the_title();
+			if ( is_null( $title ) ) {
+				the_title();
+			} else {
+				echo esc_html( $title );
+			}
 		}
 	}
 
@@ -315,5 +311,97 @@ class Helper {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Retrun header classes
+	 *
+	 * @return array
+	 */
+	public static function get_header_classes() {
+		$header_layout      = get_theme_mod( 'header-layout' );
+		$header_position    = get_theme_mod( 'header-position' );
+		$header_position_lg = get_theme_mod( 'header-position-lg' );
+		$classes = [ 'l-header', 'l-header--' . $header_layout ];
+
+		if ( $header_position ) {
+			$classes[] = 'l-header--' . $header_position . '-sm';
+		}
+
+		if ( $header_position_lg ) {
+			$classes[] = 'l-header--' . $header_position_lg . '-lg';
+		}
+
+		return $classes;
+	}
+
+	/**
+	 * Return true if has the drop-nav
+	 *
+	 * @return boolean
+	 */
+	public static function has_drop_nav() {
+		$return = false;
+
+		if ( has_nav_menu( 'global-nav' ) ) {
+			$has_drop_nav       = in_array( get_theme_mod( 'header-position' ), [ '', 'overlay' ] );
+			$has_drop_nav_on_pc = in_array( get_theme_mod( 'header-position-lg' ), [ '', 'overlay' ] );
+
+			if ( $has_drop_nav || $has_drop_nav_on_pc ) {
+				$return = true;
+			}
+		}
+
+		return apply_filters( 'snow_monkey_has_drop_nav', $return );
+	}
+
+	/**
+	 * Return hooked value of snow_monkey_use_auto_custom_logo_size.
+	 * If return true, the logo size setting in customizer is applyed.
+	 *
+	 * @return boolean
+	 */
+	public static function use_auto_custom_logo_size() {
+		return apply_filters( 'snow_monkey_use_auto_custom_logo_size', true );
+	}
+
+	/**
+	 * get_template_part php files
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @param string $directory
+	 * @param boolean $exclude_underscore
+	 * @return void
+	 */
+	public static function get_template_parts( $directory, $exclude_underscore = false ) {
+		$directory = realpath( $directory );
+
+		if ( ! is_dir( $directory ) ) {
+			return;
+		}
+
+		$template_directory = realpath( get_template_directory() );
+
+		$files = static::get_include_files( $directory, $exclude_underscore );
+
+		foreach ( $files['files'] as $file ) {
+			$file = realpath( $file );
+			$template_name = str_replace( [ $template_directory . DIRECTORY_SEPARATOR, '.php' ], '', $file );
+			WP_View_Controller\Helper::get_template_part( $template_name );
+		}
+
+		foreach ( $files['directories'] as $directory ) {
+			static::get_template_parts( $directory, $exclude_underscore );
+		}
+	}
+
+	public static function is_ie() {
+		if ( ! isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			return false;
+		}
+
+		$browser = strtolower( $_SERVER['HTTP_USER_AGENT'] );
+		return strstr( $browser, 'trident' ) || strstr( $browser, 'msie' );
 	}
 }
