@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Snow Monkey Category Content\n"
-"POT-Creation-Date: 2019-08-27 22:31+0900\n"
-"PO-Revision-Date: 2019-08-27 22:32+0900\n"
+"POT-Creation-Date: 2020-08-11 09:59+0900\n"
+"PO-Revision-Date: 2020-08-11 09:59+0900\n"
 "Last-Translator: inc2734 <inc@2inc.org>\n"
 "Language-Team: inc2734 <inc@2inc.org>\n"
 "Language: ja\n"
@@ -42,7 +42,7 @@ msgstr "割り当て 著者: %1$s"
 msgid "Assigned posts page"
 msgstr "割り当て 投稿ページ"
 
-#: App/Controller/Front.php:269
+#: App/Controller/Front.php:220
 msgid "Edit the page used as content"
 msgstr "コンテンツ用ページを編集"
 
@@ -91,15 +91,15 @@ msgstr "下書きの固定ページから選択できます。"
 msgid "Remove top margin of the content"
 msgstr "コンテンツ上部の余白を削除"
 
-#: snow-monkey-archive-content.php:73
+#: snow-monkey-archive-content.php:79
 msgid "[Snow Monkey Archive Content] Needs the Snow Monkey."
 msgstr "[Snow Monkey Archive Content] Snow Monkey が必要です。"
 
-#: snow-monkey-archive-content.php:83
-msgid "[Snow Monkey Archive Content] Needs the Snow Monkey v7.9 or more."
-msgstr "[Snow Monkey Archive Content] Snow Monkey v7.9 以上が必要です。"
+#: snow-monkey-archive-content.php:89
+msgid "[Snow Monkey Archive Content] Needs the Snow Monkey v11.0.0 or more."
+msgstr "[Snow Monkey Archive Content] Snow Monkey v11.0.0 以上が必要です。"
 
-#: snow-monkey-archive-content.php:93
+#: snow-monkey-archive-content.php:99
 msgid ""
 "[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey "
 "Category Content. Stop the Snow Monkey Category Content."

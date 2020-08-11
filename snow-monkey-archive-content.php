@@ -2,7 +2,7 @@
 /**
  * Plugin name: Snow Monkey Archive Content
  * Description: Require Snow Monkey v7.9 or more
- * Version: 0.7.0
+ * Version: 0.8.0
  * Tested up to: 5.5
  * Requires at least: 5.5
  * Requires PHP: 5.6
@@ -41,7 +41,7 @@ class Bootstrap {
 			return;
 		}
 
-		if ( ! version_compare( $theme->get( 'Version' ), '7.13.2', '>=' ) ) {
+		if ( ! version_compare( $theme->get( 'Version' ), '11.0.0', '>=' ) ) {
 			add_action( 'admin_notices', [ $this, '_admin_notice_invalid_snow_monkey_version' ] );
 			return;
 		}
@@ -86,7 +86,7 @@ class Bootstrap {
 		?>
 		<div class="notice notice-warning is-dismissible">
 			<p>
-				<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey v7.13.2 or more.', 'snow-monkey-archive-content' ); ?>
+				<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey v11.0.0 or more.', 'snow-monkey-archive-content' ); ?>
 			</p>
 		</div>
 		<?php
