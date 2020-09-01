@@ -54,7 +54,10 @@ class Front {
 	 * @return string
 	 */
 	public function _replace_content( $html, $slug ) {
-		if ( 'templates/view/archive' !== $slug && 'templates/view/home' !== $slug ) {
+		if ( 'templates/view/archive' !== $slug &&
+				 'templates/view/home' !== $slug &&
+				 'templates/view/woocommerce-archive-product' !== $slug
+		) {
 			return $html;
 		}
 
