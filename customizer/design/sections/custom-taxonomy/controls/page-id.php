@@ -35,7 +35,7 @@ foreach ( $all_terms as $_term ) {
 			'default'     => 0,
 			'choices'     => $choices,
 			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
+				return 'archive' === Controller::get_view() || 'woocommerce-archive-product' === Controller::get_view();
 			},
 		]
 	);

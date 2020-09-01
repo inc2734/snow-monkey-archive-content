@@ -24,7 +24,7 @@ foreach ( $all_terms as $_term ) {
 			'priority'    => 11,
 			'default'     => true,
 			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
+				return 'archive' === Controller::get_view() || 'woocommerce-archive-product' === Controller::get_view();
 			},
 		]
 	);
