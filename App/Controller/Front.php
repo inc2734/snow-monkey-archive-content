@@ -28,7 +28,10 @@ class Front {
 					return;
 				}
 
-				add_filter( 'snow_monkey_template_part_render', [ $this, '_replace_content' ], 10, 2 );
+				add_filter( 'snow_monkey_template_part_render_templates/view/archive', [ $this, '_replace_content' ] );
+				add_filter( 'snow_monkey_template_part_render_templates/view/home', [ $this, '_replace_content' ] );
+				add_filter( 'snow_monkey_template_part_render_templates/view/woocommerce-archive-product', [ $this, '_replace_content' ] );
+
 				add_filter( 'document_title_parts', [ $this, '_replace_title' ] );
 
 				add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
@@ -50,17 +53,9 @@ class Front {
 	 * Replace category archive page content
 	 *
 	 * @param string $html
-	 * @param string $slug
 	 * @return string
 	 */
-	public function _replace_content( $html, $slug ) {
-		if ( 'templates/view/archive' !== $slug &&
-				 'templates/view/home' !== $slug &&
-				 'templates/view/woocommerce-archive-product' !== $slug
-		) {
-			return $html;
-		}
-
+	public function _replace_content( $html ) {
 		$page_id = $this->_get_assigned_page_id();
 		if ( ! $page_id ) {
 			return $html;
