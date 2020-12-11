@@ -1,5 +1,7 @@
 # Snow Monkey Archive Content
 
+![CI](https://github.com/inc2734/snow-monkey-archive-content/workflows/CI/badge.svg)
+
 This is a plugin for Premium WordPress Theme Snow Monkey. You can display the contents of the page on the archive pages.
 
 ## Build
