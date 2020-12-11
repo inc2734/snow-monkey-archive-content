@@ -7,3 +7,6 @@ dist/
 *.sql
 snow-monkey-archive-content/
 snow-monkey-archive-content.zip
+.themes/
+.wp-env.override.json
+/sql/

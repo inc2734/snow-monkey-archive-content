@@ -12,7 +12,7 @@ use Framework\Helper as Snow_Monkey_Helper;
 class Helper {
 
 	/**
-	 * Return draft root pages
+	 * Return draft root pages.
 	 *
 	 * @return array
 	 */
@@ -34,9 +34,9 @@ class Helper {
 	}
 
 	/**
-	 * Return all terms
+	 * Return all terms.
 	 *
-	 * @param string $taxonomy
+	 * @param string $taxonomy The taxonomy name.
 	 * @return array
 	 */
 	public static function get_terms( $taxonomy ) {
@@ -44,7 +44,7 @@ class Helper {
 	}
 
 	/**
-	 * Return all users
+	 * Return all users.
 	 *
 	 * @return array
 	 */
@@ -53,7 +53,7 @@ class Helper {
 	}
 
 	/**
-	 * Return all custom post types
+	 * Return all custom post types.
 	 *
 	 * @return array
 	 */
@@ -62,7 +62,7 @@ class Helper {
 	}
 
 	/**
-	 * Return all taxonomies
+	 * Return all taxonomies.
 	 *
 	 * @return array
 	 */
@@ -71,9 +71,9 @@ class Helper {
 	}
 
 	/**
-	 * Return meta name of the posts page
+	 * Return meta name of the posts page.
 	 *
-	 * @param string $key
+	 * @param string $key The key.
 	 * @return string
 	 */
 	public static function get_home_meta_name( $key ) {
@@ -81,10 +81,10 @@ class Helper {
 	}
 
 	/**
-	 * Return meta name of the custom post type
+	 * Return meta name of the custom post type.
 	 *
-	 * @param string $key
-	 * @param string $post_type
+	 * @param string $key       The key.
+	 * @param string $post_type The post type.
 	 * @return string
 	 */
 	public static function get_custom_post_archive_meta_name( $key, $post_type ) {
@@ -92,10 +92,10 @@ class Helper {
 	}
 
 	/**
-	 * Return meta name of the term
+	 * Return meta name of the term.
 	 *
-	 * @param string $key
-	 * @param WP_Term $term
+	 * @param string  $key  The key.
+	 * @param WP_Term $term WP_Term object.
 	 * @return string
 	 */
 	public static function get_term_meta_name( $key, $term ) {
@@ -103,10 +103,10 @@ class Helper {
 	}
 
 	/**
-	 * Return meta name of the user
+	 * Return meta name of the user.
 	 *
-	 * @param string $key
-	 * @param WP_User $user
+	 * @param string  $key  The key.
+	 * @param WP_User $user WP_User object.
 	 * @return string
 	 */
 	public static function get_author_meta_name( $key, $user ) {
@@ -114,7 +114,7 @@ class Helper {
 	}
 
 	/**
-	 * Return array of assigned terms
+	 * Return array of assigned terms.
 	 *
 	 * @return array
 	 */
@@ -125,7 +125,7 @@ class Helper {
 		}
 
 		$theme_mods = get_theme_mods();
-		$terms = [];
+		$terms      = [];
 
 		foreach ( $theme_mods as $key => $value ) {
 			if ( ! preg_match( '|^snow-monkey-archive-content/term/(.+?)/(\d+?)/page-id$|', $key, $matches ) ) {
@@ -145,9 +145,9 @@ class Helper {
 	}
 
 	/**
-	 * Return assigned term
+	 * Return assigned term.
 	 *
-	 * @param int $page_id
+	 * @param int $page_id The post Id.
 	 * @return null|WP_Term
 	 */
 	public static function get_term_by_page_id( $page_id ) {
@@ -158,7 +158,7 @@ class Helper {
 	}
 
 	/**
-	 * Return array of assigned custom post types
+	 * Return array of assigned custom post types.
 	 *
 	 * @return array
 	 */
@@ -168,7 +168,7 @@ class Helper {
 			return $custom_post_types;
 		}
 
-		$theme_mods = get_theme_mods();
+		$theme_mods        = get_theme_mods();
 		$custom_post_types = [];
 
 		foreach ( $theme_mods as $key => $value ) {
@@ -189,9 +189,9 @@ class Helper {
 	}
 
 	/**
-	 * Return assigned custom post type
+	 * Return assigned custom post type.
 	 *
-	 * @param int $page_id
+	 * @param int $page_id The post Id.
 	 * @return null|object
 	 */
 	public static function get_custom_post_type_by_page_id( $page_id ) {
@@ -202,7 +202,7 @@ class Helper {
 	}
 
 	/**
-	 * Return array of assigned users
+	 * Return array of assigned users.
 	 *
 	 * @return array
 	 */
@@ -213,7 +213,7 @@ class Helper {
 		}
 
 		$theme_mods = get_theme_mods();
-		$users = [];
+		$users      = [];
 
 		foreach ( $theme_mods as $key => $value ) {
 			if ( ! preg_match( '|^snow-monkey-archive-content/author/(.+)/page-id$|', $key, $matches ) ) {
@@ -233,9 +233,9 @@ class Helper {
 	}
 
 	/**
-	 * Return assigned author
+	 * Return assigned author.
 	 *
-	 * @param int $page_id
+	 * @param int $page_id The post Id.
 	 * @return null|object
 	 */
 	public static function get_user_by_page_id( $page_id ) {
@@ -246,9 +246,9 @@ class Helper {
 	}
 
 	/**
-	 * Return true when posts page assigned
+	 * Return true when posts page assigned.
 	 *
-	 * @param int $page_id
+	 * @param int $page_id The post Id.
 	 * @return null|object
 	 */
 	public static function is_home_assigned( $page_id ) {

@@ -13,9 +13,9 @@ Framework::control(
 	'checkbox',
 	Helper::get_home_meta_name( 'remove-top-margin' ),
 	[
-		'label'       => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
-		'priority'    => 12,
-		'default'     => false,
+		'label'           => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
+		'priority'        => 12,
+		'default'         => false,
 		'active_callback' => function() {
 			return 'home' === Controller::get_view();
 		},

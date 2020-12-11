@@ -16,9 +16,9 @@ foreach ( $custom_post_types as $custom_post_type ) {
 		'checkbox',
 		Helper::get_custom_post_archive_meta_name( 'display-title', $custom_post_type ),
 		[
-			'label'       => __( 'Display page title', 'snow-monkey-archive-content' ),
-			'priority'    => 11,
-			'default'     => true,
+			'label'           => __( 'Display page title', 'snow-monkey-archive-content' ),
+			'priority'        => 11,
+			'default'         => true,
 			'active_callback' => function() {
 				return 'archive' === Controller::get_view();
 			},

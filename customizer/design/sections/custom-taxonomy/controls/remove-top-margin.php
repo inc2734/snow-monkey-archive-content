@@ -20,9 +20,9 @@ foreach ( $all_terms as $_term ) {
 		'checkbox',
 		Helper::get_term_meta_name( 'remove-top-margin', $_term ),
 		[
-			'label'       => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
-			'priority'    => 12,
-			'default'     => false,
+			'label'           => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
+			'priority'        => 12,
+			'default'         => false,
 			'active_callback' => function() {
 				return 'archive' === Controller::get_view() || 'woocommerce-archive-product' === Controller::get_view();
 			},

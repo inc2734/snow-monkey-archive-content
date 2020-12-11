@@ -16,9 +16,9 @@ foreach ( $all_terms as $_term ) {
 		'checkbox',
 		Helper::get_term_meta_name( 'display-title', $_term ),
 		[
-			'label'       => __( 'Display page title', 'snow-monkey-archive-content' ),
-			'priority'    => 11,
-			'default'     => true,
+			'label'           => __( 'Display page title', 'snow-monkey-archive-content' ),
+			'priority'        => 11,
+			'default'         => true,
 			'active_callback' => function() {
 				return 'archive' === Controller::get_view();
 			},

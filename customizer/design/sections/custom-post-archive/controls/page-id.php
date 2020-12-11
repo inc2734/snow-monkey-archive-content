@@ -25,11 +25,11 @@ foreach ( $custom_post_types as $custom_post_type ) {
 		'select',
 		Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ),
 		[
-			'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ),
-			'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
-			'priority'    => 10,
-			'default'     => 0,
-			'choices'     => $choices,
+			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ),
+			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
+			'priority'        => 10,
+			'default'         => 0,
+			'choices'         => $choices,
 			'active_callback' => function() {
 				return 'archive' === Controller::get_view();
 			},

@@ -11,21 +11,24 @@ use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 
 class Customizer {
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		add_action( 'snow_monkey_post_load_customizer', [ $this, '_load_customizer' ] );
 	}
 
 	/**
-	 * Loads customizer
+	 * Loads customizer.
 	 */
 	public function _load_customizer() {
 		$this->_load( SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/customizer' );
 	}
 
 	/**
-	 * Load files
+	 * Load files.
 	 *
-	 * @param string $directory
+	 * @param string $directory Target directory.
 	 */
 	protected function _load( $directory ) {
 		foreach ( glob( untrailingslashit( $directory ) . '/*' ) as $file ) {
@@ -41,7 +44,7 @@ class Customizer {
 					'post-tag',
 				];
 
-				if ( in_array( $basename, $sections ) ) {
+				if ( in_array( $basename, $sections, true ) ) {
 					$enable_section = apply_filters( 'snow_monkey_archive_content_enable_assignment_' . $basename, true );
 					if ( ! $enable_section ) {
 						continue;

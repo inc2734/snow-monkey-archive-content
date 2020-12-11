@@ -3,7 +3,7 @@
  * Plugin name: Snow Monkey Archive Content
  * Description: Require Snow Monkey v7.9 or more
  * Version: 0.9.0
- * Tested up to: 5.5
+ * Tested up to: 5.6
  * Requires at least: 5.5
  * Requires PHP: 5.6
  * Author: inc2734
@@ -26,10 +26,16 @@ define( 'SNOW_MONKEY_ARCHIVE_CONTENT_PATH', untrailingslashit( plugin_dir_path( 
 
 class Bootstrap {
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		add_action( 'plugins_loaded', [ $this, '_plugins_loaded' ] );
 	}
 
+	/**
+	 * Plugins loaded.
+	 */
 	public function _plugins_loaded() {
 		load_plugin_textdomain( 'snow-monkey-archive-content', false, basename( __DIR__ ) . '/languages' );
 
@@ -57,9 +63,7 @@ class Bootstrap {
 	}
 
 	/**
-	 * Activate auto update using GitHub
-	 *
-	 * @return void
+	 * Activate auto update using GitHub.
 	 */
 	public function _activate_autoupdate() {
 		new \Inc2734\WP_GitHub_Plugin_Updater\Bootstrap(
@@ -72,6 +76,9 @@ class Bootstrap {
 		);
 	}
 
+	/**
+	 * Display admin notice with no Snow Monkey.
+	 */
 	public function _admin_notice_no_snow_monkey() {
 		?>
 		<div class="notice notice-warning is-dismissible">
@@ -82,6 +89,9 @@ class Bootstrap {
 		<?php
 	}
 
+	/**
+	 * Display admin notice with invalid Snow Monkey version.
+	 */
 	public function _admin_notice_invalid_snow_monkey_version() {
 		?>
 		<div class="notice notice-warning is-dismissible">
@@ -103,6 +113,9 @@ class Bootstrap {
 		<?php
 	}
 
+	/**
+	 * Display admin notice with category content.
+	 */
 	public function _admin_notice_with_category_content() {
 		?>
 		<div class="notice notice-warning is-dismissible">
@@ -118,9 +131,7 @@ require_once( SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/vendor/autoload.php' );
 new Bootstrap();
 
 /**
- * Uninstall callback function
- *
- * @return void
+ * Uninstall callback function.
  */
 function uninstall_callback() {
 	$categories        = Helper::get_terms( 'category' );

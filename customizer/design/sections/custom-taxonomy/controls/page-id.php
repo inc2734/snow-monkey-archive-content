@@ -29,11 +29,11 @@ foreach ( $all_terms as $_term ) {
 		'select',
 		Helper::get_term_meta_name( 'page-id', $_term ),
 		[
-			'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ),
-			'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
-			'priority'    => 10,
-			'default'     => 0,
-			'choices'     => $choices,
+			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ),
+			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
+			'priority'        => 10,
+			'default'         => 0,
+			'choices'         => $choices,
 			'active_callback' => function() {
 				return 'archive' === Controller::get_view() || 'woocommerce-archive-product' === Controller::get_view();
 			},

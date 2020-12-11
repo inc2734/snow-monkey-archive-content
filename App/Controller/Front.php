@@ -11,6 +11,9 @@ use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 
 class Front {
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		add_action(
 			'wp',
@@ -50,9 +53,9 @@ class Front {
 	}
 
 	/**
-	 * Replace category archive page content
+	 * Replace category archive page content.
 	 *
-	 * @param string $html
+	 * @param string $html The post content.
 	 * @return string
 	 */
 	public function _replace_content( $html ) {
@@ -92,9 +95,9 @@ class Front {
 	}
 
 	/**
-	 * Replace category archive page title tag
+	 * Replace category archive page title tag.
 	 *
-	 * @param array $title
+	 * @param array $title The post title.
 	 * @return array
 	 */
 	public function _replace_title( $title ) {
@@ -108,9 +111,7 @@ class Front {
 	}
 
 	/**
-	 * Enqueue assets
-	 *
-	 * @return void
+	 * Enqueue assets.
 	 */
 	public function _wp_enqueue_scripts() {
 		if ( ! is_user_logged_in() ) {
@@ -126,19 +127,17 @@ class Front {
 	}
 
 	/**
-	 * Hide page title
-	 *
-	 * @return void
+	 * Hide page title.
 	 */
 	public function _hide_page_title() {
 		if ( is_category() || is_tag() || is_tax() ) {
-			$term = get_queried_object();
+			$term          = get_queried_object();
 			$display_title = get_theme_mod( Helper::get_term_meta_name( 'display-title', $term ) );
 		} elseif ( is_post_type_archive() ) {
 			$post_type_object = get_queried_object();
-			$display_title = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'display-title', $post_type_object->name ) );
+			$display_title    = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'display-title', $post_type_object->name ) );
 		} elseif ( is_author() ) {
-			$user = get_queried_object();
+			$user          = get_queried_object();
 			$display_title = get_theme_mod( Helper::get_author_meta_name( 'display-title', $user ) );
 		} elseif ( is_home() ) {
 			$display_title = get_theme_mod( Helper::get_home_meta_name( 'display-title' ) );
@@ -155,19 +154,17 @@ class Front {
 	}
 
 	/**
-	 * Remove top margin of the content
-	 *
-	 * @return void
+	 * Remove top margin of the content.
 	 */
 	public function _remove_top_margin() {
 		if ( is_category() || is_tag() || is_tax() ) {
-			$term = get_queried_object();
+			$term              = get_queried_object();
 			$remove_top_margin = get_theme_mod( Helper::get_term_meta_name( 'remove-top-margin', $term ) );
 		} elseif ( is_post_type_archive() ) {
-			$post_type_object = get_queried_object();
+			$post_type_object  = get_queried_object();
 			$remove_top_margin = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'remove-top-margin', $post_type_object->name ) );
 		} elseif ( is_author() ) {
-			$user = get_queried_object();
+			$user              = get_queried_object();
 			$remove_top_margin = get_theme_mod( Helper::get_author_meta_name( 'remove-top-margin', $user ) );
 		} elseif ( is_home() ) {
 			$remove_top_margin = get_theme_mod( Helper::get_home_meta_name( 'remove-top-margin' ) );
@@ -184,9 +181,7 @@ class Front {
 	}
 
 	/**
-	 * Remove term-description
-	 *
-	 * @return void
+	 * Remove term-description.
 	 */
 	public function _remove_term_description() {
 		$page_id = $this->_get_assigned_page_id();
@@ -201,10 +196,9 @@ class Front {
 	}
 
 	/**
-	 * Add edit page link to adminbar
+	 * Add edit page link to adminbar.
 	 *
-	 * @param WP_Admin_Bar $wp_adminbar
-	 * @return void
+	 * @param WP_Admin_Bar $wp_adminbar WP_Admin_Bar object.
 	 */
 	public function _admin_bar_menu( $wp_adminbar ) {
 		$page_id = $this->_get_assigned_page_id();
@@ -222,9 +216,9 @@ class Front {
 	}
 
 	/**
-	 * Assign og:title
+	 * Assign og:title.
 	 *
-	 * @param string $title
+	 * @param string $title og:title.
 	 * @return string
 	 */
 	public function _ogp_title( $title ) {
@@ -237,9 +231,9 @@ class Front {
 	}
 
 	/**
-	 * Assign og:description
+	 * Assign og:description.
 	 *
-	 * @param string $description
+	 * @param string $description og:description.
 	 * @return string
 	 */
 	public function _ogp_description( $description ) {
@@ -260,7 +254,7 @@ class Front {
 		);
 		while ( have_posts() ) {
 			the_post();
-			$ogp = new \Inc2734\WP_OGP\Bootstrap();
+			$ogp              = new \Inc2734\WP_OGP\Bootstrap();
 			$page_description = $ogp->get_description();
 			if ( $page_description && get_bloginfo( 'description' ) !== $page_description ) {
 				$description = $page_description;
@@ -273,7 +267,7 @@ class Front {
 	/**
 	 * Assign og:image
 	 *
-	 * @param string $image
+	 * @param string $image og:image.
 	 * @return string
 	 */
 	public function _ogp_image( $image ) {
@@ -288,19 +282,22 @@ class Front {
 				'post_status' => get_post_status( $page_id ),
 			]
 		);
+
 		while ( have_posts() ) {
 			the_post();
-			$ogp = new \Inc2734\WP_OGP\Bootstrap();
+			$ogp   = new \Inc2734\WP_OGP\Bootstrap();
 			$image = $ogp->get_image();
 		}
+
 		wp_reset_query();
+
 		return $image;
 	}
 
 	/**
-	 * Assign meta description
+	 * Assign meta description.
 	 *
-	 * @param string $description
+	 * @param string $description The description.
 	 * @return string
 	 */
 	public function _seo_description( $description ) {
@@ -319,6 +316,7 @@ class Front {
 				'post_status' => get_post_status( $page_id ),
 			]
 		);
+
 		while ( have_posts() ) {
 			the_post();
 			$page_description = \Inc2734\WP_SEO\Helper::get_the_description( $page_id );
@@ -326,14 +324,16 @@ class Front {
 				$description = $page_description;
 			}
 		}
+
 		wp_reset_query();
+
 		return $description;
 	}
 
 	/**
-	 * Assign meta thumbnail
+	 * Assign meta thumbnail.
 	 *
-	 * @param string $description
+	 * @param string $thumbnail The thumbnail.
 	 * @return string
 	 */
 	public function _seo_thumbnail( $thumbnail ) {
@@ -348,16 +348,19 @@ class Front {
 				'post_status' => get_post_status( $page_id ),
 			]
 		);
+
 		while ( have_posts() ) {
 			the_post();
 			$thumbnail = \Inc2734\WP_SEO\Helper::get_the_thumbnail( $page_id );
 		}
+
 		wp_reset_query();
+
 		return $thumbnail;
 	}
 
 	/**
-	 * Return assigned page id
+	 * Return assigned page id.
 	 *
 	 * @return int|false
 	 */
@@ -367,7 +370,7 @@ class Front {
 			$page_id = get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
 		} elseif ( is_post_type_archive() ) {
 			$post_type_object = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $post_type_object->name ) );
+			$page_id          = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $post_type_object->name ) );
 		} elseif ( is_author() ) {
 			$user    = get_queried_object();
 			$page_id = get_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );

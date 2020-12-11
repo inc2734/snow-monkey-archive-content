@@ -11,6 +11,9 @@ use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 
 class Edit {
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 		add_filter( 'display_post_states', [ $this, '_display_assigned_term' ], 10, 2 );
 		add_filter( 'display_post_states', [ $this, '_display_assigned_custom_post_type' ], 10, 2 );
@@ -19,14 +22,14 @@ class Edit {
 	}
 
 	/**
-	 * Add post status comment
+	 * Add post status comment.
 	 *
-	 * @param array $post_states
-	 * @param WP_Post $post
+	 * @param array   $post_states An array of post display states.
+	 * @param WP_Post $post        The current post object.
 	 * @return array
 	 */
 	public function _display_assigned_term( $post_states, $post ) {
-		if ( ! $this->_is_draft_page( $post->post_type, $post_states ) ) {
+		if ( ! $this->_is_draft_page( $post, $post_states ) ) {
 			return $post_states;
 		}
 
@@ -48,14 +51,14 @@ class Edit {
 	}
 
 	/**
-	 * Add post status comment
+	 * Add post status comment.
 	 *
-	 * @param array $post_states
-	 * @param WP_Post $post
+	 * @param array   $post_states An array of post display states.
+	 * @param WP_Post $post        The current post object.
 	 * @return array
 	 */
 	public function _display_assigned_custom_post_type( $post_states, $post ) {
-		if ( ! $this->_is_draft_page( $post->post_type, $post_states ) ) {
+		if ( ! $this->_is_draft_page( $post, $post_states ) ) {
 			return $post_states;
 		}
 
@@ -74,14 +77,14 @@ class Edit {
 	}
 
 	/**
-	 * Add post status comment
+	 * Add post status comment.
 	 *
-	 * @param array $post_states
-	 * @param WP_Post $post
+	 * @param array   $post_states An array of post display states.
+	 * @param WP_Post $post        The current post object.
 	 * @return array
 	 */
 	public function _display_assigned_user( $post_states, $post ) {
-		if ( ! $this->_is_draft_page( $post->post_type, $post_states ) ) {
+		if ( ! $this->_is_draft_page( $post, $post_states ) ) {
 			return $post_states;
 		}
 
@@ -100,14 +103,14 @@ class Edit {
 	}
 
 	/**
-	 * Add post status comment
+	 * Add post status comment.
 	 *
-	 * @param array $post_states
-	 * @param WP_Post $post
+	 * @param array   $post_states An array of post display states.
+	 * @param WP_Post $post        The current post object.
 	 * @return array
 	 */
 	public function _display_assigned_home( $post_states, $post ) {
-		if ( ! $this->_is_draft_page( $post->post_type, $post_states ) ) {
+		if ( ! $this->_is_draft_page( $post, $post_states ) ) {
 			return $post_states;
 		}
 
@@ -121,7 +124,13 @@ class Edit {
 		return $post_states;
 	}
 
-	protected function _is_draft_page( $post_type, $post_states ) {
-		return 'page' === $post_type && array_key_exists( 'draft', $post_states );
+	/**
+	 * Return true if the page is draft.
+	 *
+	 * @param WP_Post $post        The current post object.
+	 * @param array   $post_states An array of post display states.
+	 */
+	protected function _is_draft_page( $post, $post_states ) {
+		return 'page' === $post->post_type && array_key_exists( 'draft', $post_states );
 	}
 }
