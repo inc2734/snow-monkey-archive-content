@@ -31,11 +31,27 @@ class Front {
 					return;
 				}
 
-				add_filter( 'snow_monkey_template_part_render_templates/view/archive', [ $this, '_replace_content' ] );
-				add_filter( 'snow_monkey_template_part_render_templates/view/home', [ $this, '_replace_content' ] );
-				add_filter( 'snow_monkey_template_part_render_templates/view/woocommerce-archive-product', [ $this, '_replace_content' ] );
+				add_filter(
+					'snow_monkey_template_part_render_template-parts/archive/entry/header/header',
+					[ $this, '_replace_page_title' ]
+				);
 
-				add_filter( 'document_title_parts', [ $this, '_replace_title' ] );
+				add_filter(
+					'snow_monkey_template_part_render_templates/view/archive',
+					[ $this, '_replace_content' ]
+				);
+
+				add_filter(
+					'snow_monkey_template_part_render_templates/view/home',
+					[ $this, '_replace_content' ]
+				);
+
+				add_filter(
+					'snow_monkey_template_part_render_templates/view/woocommerce-archive-product',
+					[ $this, '_replace_content' ]
+				);
+
+				add_filter( 'document_title_parts', [ $this, '_replace_document_title' ] );
 
 				add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
 				add_action( 'wp_head', [ $this, '_hide_page_title' ] );
@@ -49,6 +65,42 @@ class Front {
 				add_filter( 'inc2734_wp_seo_description', [ $this, '_seo_description' ], 11 );
 				add_filter( 'inc2734_wp_seo_thumbnail', [ $this, '_seo_thumbnail' ], 11 );
 			}
+		);
+	}
+
+	/**
+	 * Replace category archive page title.
+	 *
+	 * @param string $html The post header.
+	 * @return string
+	 */
+	public function _replace_page_title( $html ) {
+		if ( is_category() || is_tag() || is_tax() ) {
+			$term          = get_queried_object();
+			$replace_title = get_theme_mod( Helper::get_term_meta_name( 'replace-title', $term ) );
+		} elseif ( is_post_type_archive() ) {
+			$post_type_object = get_queried_object();
+			$replace_title    = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'replace-title', $post_type_object->name ) );
+		} elseif ( is_author() ) {
+			$user          = get_queried_object();
+			$replace_title = get_theme_mod( Helper::get_author_meta_name( 'replace-title', $user ) );
+		} elseif ( is_home() ) {
+			$replace_title = get_theme_mod( Helper::get_home_meta_name( 'replace-title' ) );
+		}
+
+		if ( ! $replace_title ) {
+			return $html;
+		}
+
+		$page_id = $this->_get_assigned_page_id();
+		if ( ! $page_id ) {
+			return $html;
+		}
+
+		return preg_replace(
+			'|(<h1 class="c-entry__title">).*?(</h1>)|',
+			'$1' . get_the_title( $page_id ) . '$2',
+			$html
 		);
 	}
 
@@ -100,7 +152,7 @@ class Front {
 	 * @param array $title The post title.
 	 * @return array
 	 */
-	public function _replace_title( $title ) {
+	public function _replace_document_title( $title ) {
 		$page_id = $this->_get_assigned_page_id();
 		if ( ! $page_id ) {
 			return $title;

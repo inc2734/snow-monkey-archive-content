@@ -1,48 +1,51 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Snow Monkey Category Content\n"
-"POT-Creation-Date: 2020-09-02 10:21+0900\n"
-"PO-Revision-Date: 2020-09-02 10:22+0900\n"
+"POT-Creation-Date: 2021-02-02 13:37+0900\n"
+"PO-Revision-Date: 2021-02-02 13:37+0900\n"
 "Last-Translator: inc2734 <inc@2inc.org>\n"
 "Language-Team: inc2734 <inc@2inc.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 2.4.2\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: snow-monkey-archive-content.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SearchPathExcluded-1: .themes\n"
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 
-#: App/Controller/Edit.php:42
+#. translators: %1: Taxonomy label, %2: Term name
+#: App/Controller/Edit.php:45
 #, php-format
 msgid "Assigned %1$s: %2$s"
 msgstr "割り当て %1$s: %2$s"
 
-#: App/Controller/Edit.php:69
+#. translators: %1: Custom post type label
+#: App/Controller/Edit.php:72
 #, php-format
 msgid "Assigned %1$s archive"
 msgstr "割り当て %1$s アーカイブ"
 
-#: App/Controller/Edit.php:95
+#. translators: %1: Display name
+#: App/Controller/Edit.php:98
 #, php-format
 msgid "Assigned author: %1$s"
 msgstr "割り当て 著者: %1$s"
 
-#: App/Controller/Edit.php:119
+#: App/Controller/Edit.php:122
 msgid "Assigned posts page"
 msgstr "割り当て 投稿ページ"
 
-#: App/Controller/Front.php:218
+#: App/Controller/Front.php:264
 msgid "Edit the page used as content"
 msgstr "コンテンツ用ページを編集"
 
@@ -91,22 +94,30 @@ msgstr "下書きの固定ページから選択できます。"
 msgid "Remove top margin of the content"
 msgstr "コンテンツ上部の余白を削除"
 
-#: snow-monkey-archive-content.php:79
+#: customizer/design/sections/category/controls/replace-title.php:19
+#: customizer/design/sections/custom-post-archive/controls/replace-title.php:19
+#: customizer/design/sections/custom-taxonomy/controls/replace-title.php:23
+#: customizer/design/sections/home/controls/replace-title.php:16
+#: customizer/design/sections/post-tag/controls/replace-title.php:19
+msgid "Replace page title"
+msgstr "ページタイトルを置換"
+
+#: snow-monkey-archive-content.php:86
 msgid "[Snow Monkey Archive Content] Needs the Snow Monkey."
 msgstr "[Snow Monkey Archive Content] Snow Monkey が必要です。"
 
-#: snow-monkey-archive-content.php:94
+#: snow-monkey-archive-content.php:104
 #, php-format
 msgid "[Snow Monkey Archive Content] Needs the Snow Monkey %1$s or more."
 msgstr "[Snow Monkey Archive Content] Snow Monkey %1$s 以上が必要です。"
 
-#: snow-monkey-archive-content.php:110
+#: snow-monkey-archive-content.php:123
 msgid ""
 "[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey "
 "Category Content. Stop the Snow Monkey Category Content."
 msgstr ""
-"[Snow Monkey Archive Content] Snow Monkey Category Content と一緒に有効化でき"
-"ません。Snow Monkey Category Content を停止してください。"
+"[Snow Monkey Archive Content] Snow Monkey Category Content と一緒に有効化で"
+"きません。Snow Monkey Category Content を停止してください。"
 
 #. Plugin Name of the plugin/theme
 msgid "Snow Monkey Archive Content"

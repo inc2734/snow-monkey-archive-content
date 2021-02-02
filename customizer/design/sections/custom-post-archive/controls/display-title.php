@@ -19,8 +19,8 @@ foreach ( $custom_post_types as $custom_post_type ) {
 			'label'           => __( 'Display page title', 'snow-monkey-archive-content' ),
 			'priority'        => 11,
 			'default'         => true,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
+			'active_callback' => function() use ( $custom_post_type ) {
+				return 'archive' === Controller::get_view() && is_post_type_archive( $custom_post_type );
 			},
 		]
 	);

@@ -30,8 +30,8 @@ foreach ( $custom_post_types as $custom_post_type ) {
 			'priority'        => 10,
 			'default'         => 0,
 			'choices'         => $choices,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
+			'active_callback' => function() use ( $custom_post_type ) {
+				return 'archive' === Controller::get_view() && is_post_type_archive( $custom_post_type );
 			},
 		]
 	);

@@ -9,22 +9,20 @@ use Inc2734\WP_Customizer_Framework\Framework;
 use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 use Framework\Controller\Controller;
 
-$all_terms  = [];
-$taxonomies = Helper::get_taxonomies();
-foreach ( $taxonomies as $_taxonomy ) {
-	$all_terms = array_merge( $all_terms, Helper::get_terms( $_taxonomy ) );
-}
+$all_terms = Helper::get_terms( 'category' );
 
 foreach ( $all_terms as $_term ) {
 	Framework::control(
 		'checkbox',
-		Helper::get_term_meta_name( 'remove-top-margin', $_term ),
+		Helper::get_term_meta_name( 'replace-title', $_term ),
 		[
-			'label'           => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
-			'priority'        => 13,
+			'label'           => __( 'Replace page title', 'snow-monkey-archive-content' ),
+			'priority'        => 12,
 			'default'         => false,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view() || 'woocommerce-archive-product' === Controller::get_view();
+			'active_callback' => function() use ( $_term ) {
+				return 'archive' === Controller::get_view()
+						&& get_theme_mod( Helper::get_term_meta_name( 'page-id', $_term ) )
+						&& get_theme_mod( Helper::get_term_meta_name( 'display-title', $_term ) );
 			},
 		]
 	);
@@ -38,6 +36,6 @@ $panel = Framework::get_panel( 'design' );
 
 foreach ( $all_terms as $_term ) {
 	$section = Framework::get_section( 'design-' . $_term->taxonomy . '-' . $_term->term_id );
-	$control = Framework::get_control( Helper::get_term_meta_name( 'remove-top-margin', $_term ) );
+	$control = Framework::get_control( Helper::get_term_meta_name( 'replace-title', $_term ) );
 	$control->join( $section )->join( $panel );
 }
