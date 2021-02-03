@@ -37,6 +37,11 @@ class Front {
 				);
 
 				add_filter(
+					'snow_monkey_template_part_render_template-parts/common/page-header',
+					[ $this, '_replace_page_title' ]
+				);
+
+				add_filter(
 					'snow_monkey_template_part_render_templates/view/archive',
 					[ $this, '_replace_content' ]
 				);
@@ -98,7 +103,10 @@ class Front {
 		}
 
 		return preg_replace(
-			'|(<h1 class="c-entry__title">).*?(</h1>)|',
+			[
+				'|(<h1 class="c-entry__title">).*?(</h1>)|ms',
+				'|(<h1 class="c-page-header__title">).*?(</h1>)|ms',
+			],
 			'$1' . get_the_title( $page_id ) . '$2',
 			$html
 		);
