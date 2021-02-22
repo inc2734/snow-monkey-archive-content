@@ -235,7 +235,7 @@ class Front {
 		}
 		?>
 		<style id="snow-monkey-archive-content-style-remove-top-margin">
-		.l-contents__inner, .l-contents__main > .c-entry { margin-top: 0 !important; }
+		.l-contents__inner { margin-top: 0 !important; padding-top: 0 !important; }
 		</style>
 		<?php
 	}

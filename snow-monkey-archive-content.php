@@ -1,11 +1,12 @@
 <?php
 /**
  * Plugin name: Snow Monkey Archive Content
- * Description: Require Snow Monkey v7.9 or more
+ * Description: Activating this plug-in, you will be able to assign pages to archive pages.
  * Version: 0.10.1
  * Tested up to: 5.6
  * Requires at least: 5.6
  * Requires PHP: 5.6
+ * Requires Snow Monkey: 13.0.0
  * Author: inc2734
  * Author URI: https://2inc.org
  * License: GPL2 or later
@@ -43,17 +44,71 @@ class Bootstrap {
 
 		$theme = wp_get_theme( get_template() );
 		if ( 'snow-monkey' !== $theme->template && 'snow-monkey/resources' !== $theme->template ) {
-			add_action( 'admin_notices', [ $this, '_admin_notice_no_snow_monkey' ] );
+			add_action(
+				'admin_notices',
+				function() {
+					?>
+					<div class="notice notice-warning is-dismissible">
+						<p>
+							<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey.', 'snow-monkey-archive-content' ); ?>
+						</p>
+					</div>
+					<?php
+				}
+			);
 			return;
 		}
 
-		if ( ! version_compare( $theme->get( 'Version' ), '11.1.0', '>=' ) ) {
-			add_action( 'admin_notices', [ $this, '_admin_notice_invalid_snow_monkey_version' ] );
+		$data = get_file_data(
+			__FILE__,
+			[
+				'RequiresSnowMonkey' => 'Requires Snow Monkey',
+			]
+		);
+
+		if (
+			isset( $data['RequiresSnowMonkey'] ) &&
+			version_compare( $theme->get( 'Version' ), $data['RequiresSnowMonkey'], '<' )
+		) {
+			add_action(
+				'admin_notices',
+				function() use ( $data ) {
+					?>
+					<div class="notice notice-warning is-dismissible">
+						<p>
+							<?php
+							echo esc_html(
+								sprintf(
+									// translators: %1$s: version
+									__(
+										'[Snow Monkey Archive Content] Needs the Snow Monkey %1$s or more.',
+										'snow-monkey-archive-content'
+									),
+									'v' . $data['RequiresSnowMonkey']
+								)
+							);
+							?>
+						</p>
+					</div>
+					<?php
+				}
+			);
 			return;
 		}
 
 		if ( class_exists( '\Snow_Monkey\Plugin\CategoryContent\Bootstrap' ) ) {
-			add_action( 'admin_notices', [ $this, '_admin_notice_with_category_content' ] );
+			add_action(
+				'admin_notices',
+				function() {
+					?>
+					<div class="notice notice-warning is-dismissible">
+						<p>
+							<?php esc_html_e( '[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey Category Content. Stop the Snow Monkey Category Content.', 'snow-monkey-archive-content' ); ?>
+						</p>
+					</div>
+					<?php
+				}
+			);
 			return;
 		}
 
@@ -74,56 +129,6 @@ class Bootstrap {
 				'homepage' => 'https://snow-monkey.2inc.org',
 			]
 		);
-	}
-
-	/**
-	 * Display admin notice with no Snow Monkey.
-	 */
-	public function _admin_notice_no_snow_monkey() {
-		?>
-		<div class="notice notice-warning is-dismissible">
-			<p>
-				<?php esc_html_e( '[Snow Monkey Archive Content] Needs the Snow Monkey.', 'snow-monkey-archive-content' ); ?>
-			</p>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Display admin notice with invalid Snow Monkey version.
-	 */
-	public function _admin_notice_invalid_snow_monkey_version() {
-		?>
-		<div class="notice notice-warning is-dismissible">
-			<p>
-				<?php
-				echo esc_html(
-					sprintf(
-						// translators: %1$s: version
-						__(
-							'[Snow Monkey Archive Content] Needs the Snow Monkey %1$s or more.',
-							'snow-monkey-archive-content'
-						),
-						'v11.1.0'
-					)
-				);
-				?>
-			</p>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Display admin notice with category content.
-	 */
-	public function _admin_notice_with_category_content() {
-		?>
-		<div class="notice notice-warning is-dismissible">
-			<p>
-				<?php esc_html_e( '[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey Category Content. Stop the Snow Monkey Category Content.', 'snow-monkey-archive-content' ); ?>
-			</p>
-		</div>
-		<?php
 	}
 }
 
