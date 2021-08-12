@@ -47,6 +47,11 @@ class Front {
 				);
 
 				add_filter(
+					'snow_monkey_template_part_render_templates/view/none',
+					[ $this, '_replace_content' ]
+				);
+
+				add_filter(
 					'snow_monkey_template_part_render_templates/view/home',
 					[ $this, '_replace_content' ]
 				);

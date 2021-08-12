@@ -10,3 +10,4 @@ snow-monkey-archive-content.zip
 .themes/
 .wp-env.override.json
 /sql/
+/.export/*
