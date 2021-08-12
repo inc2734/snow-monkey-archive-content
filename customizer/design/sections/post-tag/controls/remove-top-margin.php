@@ -9,19 +9,21 @@ use Inc2734\WP_Customizer_Framework\Framework;
 use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 use Framework\Controller\Controller;
 
-$all_terms = Helper::get_terms( 'post_tag' );
+$all_terms = Helper::get_terms(
+	[
+		'taxonomy'   => 'post_tag',
+		'hide_empty' => false,
+	]
+);
 
 foreach ( $all_terms as $_term ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_term_meta_name( 'remove-top-margin', $_term ),
 		[
-			'label'           => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
-			'priority'        => 13,
-			'default'         => false,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
-			},
+			'label'    => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
+			'priority' => 13,
+			'default'  => false,
 		]
 	);
 }

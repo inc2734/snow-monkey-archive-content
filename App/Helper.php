@@ -36,11 +36,11 @@ class Helper {
 	/**
 	 * Return all terms.
 	 *
-	 * @param string $taxonomy The taxonomy name.
+	 * @param array|string $args Array or string of arguments.
 	 * @return array
 	 */
-	public static function get_terms( $taxonomy ) {
-		return Snow_Monkey_Helper::get_terms( $taxonomy );
+	public static function get_terms( $args = [] ) {
+		return Snow_Monkey_Helper::get_terms( $args );
 	}
 
 	/**

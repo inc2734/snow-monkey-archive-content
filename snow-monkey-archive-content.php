@@ -6,7 +6,7 @@
  * Tested up to: 5.6
  * Requires at least: 5.6
  * Requires PHP: 5.6
- * Requires Snow Monkey: 13.0.0
+ * Requires Snow Monkey: 15.3.0
  * Author: inc2734
  * Author URI: https://2inc.org
  * License: GPL2 or later
@@ -139,15 +139,35 @@ new Bootstrap();
  * Uninstall callback function.
  */
 function uninstall_callback() {
-	$categories        = Helper::get_terms( 'category' );
-	$post_tags         = Helper::get_terms( 'post_tag' );
+	$categories = Helper::get_terms(
+		[
+			'taxonomy'   => 'category',
+			'hide_empty' => false,
+		]
+	);
+
+	$post_tags = Helper::get_terms(
+		[
+			'taxonomy'   => 'post_tag',
+			'hide_empty' => false,
+		]
+	);
+
 	$terms             = array_merge( $categories, $post_tags );
 	$custom_post_types = Helper::get_custom_post_types();
 	$users             = Helper::get_users();
 
 	$taxonomies = Helper::get_taxonomies();
 	foreach ( $taxonomies as $_taxonomy ) {
-		$terms = array_merge( $terms, Helper::get_terms( $_taxonomy ) );
+		$terms = array_merge(
+			$terms,
+			Helper::get_terms(
+				[
+					'taxonomy'   => $_taxonomy,
+					'hide_empty' => false,
+				]
+			)
+		);
 	}
 
 	foreach ( $terms as $term ) {

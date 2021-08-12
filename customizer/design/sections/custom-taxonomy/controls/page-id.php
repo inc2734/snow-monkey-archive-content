@@ -9,11 +9,17 @@ use Inc2734\WP_Customizer_Framework\Framework;
 use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 use Framework\Controller\Controller;
 
-$all_terms  = [];
 $taxonomies = Helper::get_taxonomies();
-foreach ( $taxonomies as $_taxonomy ) {
-	$all_terms = array_merge( $all_terms, Helper::get_terms( $_taxonomy ) );
+if ( ! $taxonomies ) {
+	return;
 }
+
+$all_terms = Helper::get_terms(
+	[
+		'taxonomy'   => $taxonomies,
+		'hide_empty' => false,
+	]
+);
 
 $all_pages = Helper::get_draft_pages();
 
@@ -29,14 +35,11 @@ foreach ( $all_terms as $_term ) {
 		'select',
 		Helper::get_term_meta_name( 'page-id', $_term ),
 		[
-			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ),
-			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
-			'priority'        => 10,
-			'default'         => 0,
-			'choices'         => $choices,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view() || 'woocommerce-archive-product' === Controller::get_view();
-			},
+			'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ),
+			'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
+			'priority'    => 10,
+			'default'     => 0,
+			'choices'     => $choices,
 		]
 	);
 }

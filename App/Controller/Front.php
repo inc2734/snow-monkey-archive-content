@@ -41,24 +41,9 @@ class Front {
 					[ $this, '_replace_page_title' ]
 				);
 
-				add_filter(
-					'snow_monkey_template_part_render_templates/view/archive',
-					[ $this, '_replace_content' ]
-				);
-
-				add_filter(
-					'snow_monkey_template_part_render_templates/view/none',
-					[ $this, '_replace_content' ]
-				);
-
-				add_filter(
-					'snow_monkey_template_part_render_templates/view/home',
-					[ $this, '_replace_content' ]
-				);
-
-				add_filter(
-					'snow_monkey_template_part_render_templates/view/woocommerce-archive-product',
-					[ $this, '_replace_content' ]
+				add_action(
+					'snow_monkey_before_archive_entry_content',
+					[ $this, '_add_content' ]
 				);
 
 				add_filter( 'document_title_parts', [ $this, '_replace_document_title' ] );
@@ -118,15 +103,12 @@ class Front {
 	}
 
 	/**
-	 * Replace category archive page content.
-	 *
-	 * @param string $html The post content.
-	 * @return string
+	 * Add category archive page content.
 	 */
-	public function _replace_content( $html ) {
+	public function _add_content() {
 		$page_id = $this->_get_assigned_page_id();
 		if ( ! $page_id ) {
-			return $html;
+			return;
 		}
 
 		query_posts(
@@ -137,26 +119,19 @@ class Front {
 		);
 
 		if ( ! have_posts() ) {
-			return $html;
+			return;
 		}
-
-		$content = '';
-		while ( have_posts() ) {
-			the_post();
-			ob_start();
-			the_content();
-			$content = ob_get_clean();
-		}
+		?>
+		<?php while ( have_posts() ) : ?>
+			<?php the_post(); ?>
+			<div class="post-<?php echo esc_attr( $page_id ); ?>" id="snow-monkey-archive-content-body">
+				<div class="c-entry__content p-entry-content">
+					<?php the_content(); ?>
+				</div>
+			</div>
+		<?php endwhile; ?>
+		<?php
 		wp_reset_query();
-
-		return str_replace(
-			'<div class="c-entry__body">',
-			'<div class="c-entry__body">
-				<div class="post-' . esc_attr( $page_id ) . '" id="snow-monkey-archive-content-body">
-					<div class="c-entry__content p-entry-content">' . $content . '</div>
-				</div>',
-			$html
-		);
 	}
 
 	/**

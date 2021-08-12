@@ -9,11 +9,17 @@ use Inc2734\WP_Customizer_Framework\Framework;
 use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 use Framework\Controller\Controller;
 
-$all_terms  = [];
 $taxonomies = Helper::get_taxonomies();
-foreach ( $taxonomies as $_taxonomy ) {
-	$all_terms = array_merge( $all_terms, Helper::get_terms( $_taxonomy ) );
+if ( ! $taxonomies ) {
+	return;
 }
+
+$all_terms = Helper::get_terms(
+	[
+		'taxonomy'   => $taxonomies,
+		'hide_empty' => false,
+	]
+);
 
 foreach ( $all_terms as $_term ) {
 	Framework::control(
@@ -24,8 +30,7 @@ foreach ( $all_terms as $_term ) {
 			'priority'        => 12,
 			'default'         => false,
 			'active_callback' => function() use ( $_term ) {
-				return 'archive' === Controller::get_view()
-						&& get_theme_mod( Helper::get_term_meta_name( 'page-id', $_term ) )
+				return get_theme_mod( Helper::get_term_meta_name( 'page-id', $_term ) )
 						&& get_theme_mod( Helper::get_term_meta_name( 'display-title', $_term ) );
 			},
 		]

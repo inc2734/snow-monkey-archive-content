@@ -9,7 +9,13 @@ use Inc2734\WP_Customizer_Framework\Framework;
 use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 use Framework\Controller\Controller;
 
-$all_terms = Helper::get_terms( 'post_tag' );
+$all_terms = Helper::get_terms(
+	[
+		'taxonomy'   => 'post_tag',
+		'hide_empty' => false,
+	]
+);
+
 $all_pages = Helper::get_draft_pages();
 
 $choices = [
@@ -24,14 +30,11 @@ foreach ( $all_terms as $_term ) {
 		'select',
 		Helper::get_term_meta_name( 'page-id', $_term ),
 		[
-			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ),
-			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
-			'priority'        => 10,
-			'default'         => 0,
-			'choices'         => $choices,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
-			},
+			'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ),
+			'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
+			'priority'    => 10,
+			'default'     => 0,
+			'choices'     => $choices,
 		]
 	);
 }

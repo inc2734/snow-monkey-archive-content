@@ -13,8 +13,12 @@ class Uninstall_Test extends WP_UnitTestCase {
 
 		wp_set_object_terms( $post_id, $category_ids, 'category' );
 
-		$terms = Helper::get_terms( 'category' );
-		$pages = Helper::get_draft_pages();
+		$terms = Helper::get_terms(
+			[
+				'taxonomy'   => 'category',
+				'hide_empty' => false,
+			]
+		);
 
 		foreach ( $terms as $term ) {
 			set_theme_mod( Helper::get_term_meta_name( 'page-id', $term ), $page_id );
@@ -33,19 +37,22 @@ class Uninstall_Test extends WP_UnitTestCase {
 	public function custom_taxonomy() {
 		register_taxonomy( 'wptests_tax', 'post' );
 
-		$term_ids     = $this->factory()->term->create_many( 5, [ 'taxonomy' => 'wptests_tax' ] );
-		$post_id      = $this->factory()->post->create( [ 'post_type' => 'post' ] );
-		$page_id      = $this->factory()->post->create( [ 'post_type' => 'page' ] );
+		$term_ids = $this->factory()->term->create_many( 5, [ 'taxonomy' => 'wptests_tax' ] );
+		$post_id  = $this->factory()->post->create( [ 'post_type' => 'post' ] );
+		$page_id  = $this->factory()->post->create( [ 'post_type' => 'page' ] );
 
 		wp_set_object_terms( $post_id, $term_ids, 'wptests_tax' );
 
 		$terms      = [];
 		$taxonomies = Helper::get_taxonomies();
-		foreach ( $taxonomies as $_taxonomy ) {
-			$terms = array_merge( $terms, Helper::get_terms( $_taxonomy ) );
+		if ( $taxonomies ) {
+			$terms = Helper::get_terms(
+				[
+					'taxonomy'   => $taxonomies,
+					'hide_empty' => false,
+				]
+			);
 		}
-
-		$pages = Helper::get_draft_pages();
 
 		foreach ( $terms as $term ) {
 			set_theme_mod( Helper::get_term_meta_name( 'page-id', $term ), $page_id );

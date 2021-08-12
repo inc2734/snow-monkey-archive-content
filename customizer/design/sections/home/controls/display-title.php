@@ -14,12 +14,9 @@ Framework::control(
 	'checkbox',
 	Helper::get_home_meta_name( 'display-title' ),
 	[
-		'label'           => __( 'Display page title', 'snow-monkey-archive-content' ),
-		'priority'        => 11,
-		'default'         => true,
-		'active_callback' => function() {
-			return 'home' === Controller::get_view() && ! is_front_page();
-		},
+		'label'    => __( 'Display page title', 'snow-monkey-archive-content' ),
+		'priority' => 11,
+		'default'  => true,
 	]
 );
 

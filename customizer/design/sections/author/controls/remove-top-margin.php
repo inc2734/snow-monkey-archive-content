@@ -16,12 +16,9 @@ foreach ( $all_users as $user ) {
 		'checkbox',
 		Helper::get_author_meta_name( 'remove-top-margin', $user ),
 		[
-			'label'           => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
-			'priority'        => 12,
-			'default'         => false,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
-			},
+			'label'    => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
+			'priority' => 12,
+			'default'  => false,
 		]
 	);
 }

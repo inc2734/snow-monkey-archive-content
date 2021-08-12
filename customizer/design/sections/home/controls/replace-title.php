@@ -17,9 +17,7 @@ Framework::control(
 		'priority'        => 12,
 		'default'         => false,
 		'active_callback' => function() {
-			return 'home' === Controller::get_view()
-					&& ! is_front_page()
-					&& get_theme_mod( Helper::get_home_meta_name( 'page-id' ) )
+			return get_theme_mod( Helper::get_home_meta_name( 'page-id' ) )
 					&& get_theme_mod( Helper::get_home_meta_name( 'display-title' ) );
 		},
 	]

@@ -24,14 +24,11 @@ foreach ( $all_users as $user ) {
 		'select',
 		Helper::get_author_meta_name( 'page-id', $user ),
 		[
-			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ),
-			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
-			'priority'        => 10,
-			'default'         => 0,
-			'choices'         => $choices,
-			'active_callback' => function() {
-				return 'archive' === Controller::get_view();
-			},
+			'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ),
+			'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
+			'priority'    => 10,
+			'default'     => 0,
+			'choices'     => $choices,
 		]
 	);
 }
