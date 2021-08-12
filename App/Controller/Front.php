@@ -279,17 +279,26 @@ class Front {
 	 */
 	public function _admin_bar_menu( $wp_adminbar ) {
 		$page_id = $this->_get_assigned_page_id();
-		if ( ! $page_id ) {
-			return;
+		if ( $page_id ) {
+			$wp_adminbar->add_node(
+				[
+					'id'    => 'snow-monkey-archive-content-edit-page',
+					'title' => __( 'Edit the page used as content', 'snow-monkey-archive-content' ),
+					'href'  => get_edit_post_link( $page_id, 'url' ),
+				]
+			);
 		}
 
-		$wp_adminbar->add_node(
-			[
-				'id'    => 'snow-monkey-archive-content-edit-page',
-				'title' => __( 'Edit the page used as content', 'snow-monkey-archive-content' ),
-				'href'  => get_edit_post_link( $page_id, 'url' ),
-			]
-		);
+		$page_id_2 = $this->_get_assigned_page_id_2();
+		if ( $page_id_2 ) {
+			$wp_adminbar->add_node(
+				[
+					'id'    => 'snow-monkey-archive-content-edit-page-2',
+					'title' => __( 'Edit the page used as content', 'snow-monkey-archive-content' ) . '2',
+					'href'  => get_edit_post_link( $page_id_2, 'url' ),
+				]
+			);
+		}
 	}
 
 	/**
