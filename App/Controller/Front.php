@@ -116,16 +116,15 @@ class Front {
 			return;
 		}
 
+		global $post;
+		$_post = empty( $post ) ? $post : clone $post;
+
 		query_posts(
 			[
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
 			]
 		);
-
-		if ( ! have_posts() ) {
-			return;
-		}
 		?>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
@@ -137,6 +136,7 @@ class Front {
 		<?php endwhile; ?>
 		<?php
 		wp_reset_query();
+		$post = $_post;
 	}
 
 	/**
@@ -148,16 +148,15 @@ class Front {
 			return;
 		}
 
+		global $post;
+		$_post = empty( $post ) ? $post : clone $post;
+
 		query_posts(
 			[
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
 			]
 		);
-
-		if ( ! have_posts() ) {
-			return;
-		}
 		?>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
@@ -169,6 +168,7 @@ class Front {
 		<?php endwhile; ?>
 		<?php
 		wp_reset_query();
+		$post = $_post;
 	}
 
 	/**
@@ -323,12 +323,16 @@ class Front {
 			return $description;
 		}
 
+		global $post;
+		$_post = empty( $post ) ? $post : clone $post;
+
 		query_posts(
 			[
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
 			]
 		);
+
 		while ( have_posts() ) {
 			the_post();
 			$ogp              = new \Inc2734\WP_OGP\Bootstrap();
@@ -337,7 +341,9 @@ class Front {
 				$description = $page_description;
 			}
 		}
+
 		wp_reset_query();
+		$post = $_post;
 		return $description;
 	}
 
@@ -353,6 +359,9 @@ class Front {
 			return $image;
 		}
 
+		global $post;
+		$_post = empty( $post ) ? $post : clone $post;
+
 		query_posts(
 			[
 				'page_id'     => $page_id,
@@ -367,6 +376,7 @@ class Front {
 		}
 
 		wp_reset_query();
+		$post = $_post;
 
 		return $image;
 	}
@@ -387,6 +397,9 @@ class Front {
 			return $description;
 		}
 
+		global $post;
+		$_post = empty( $post ) ? $post : clone $post;
+
 		query_posts(
 			[
 				'page_id'     => $page_id,
@@ -403,6 +416,7 @@ class Front {
 		}
 
 		wp_reset_query();
+		$post = $_post;
 
 		return $description;
 	}
@@ -419,6 +433,9 @@ class Front {
 			return $thumbnail;
 		}
 
+		global $post;
+		$_post = empty( $post ) ? $post : clone $post;
+
 		query_posts(
 			[
 				'page_id'     => $page_id,
@@ -432,6 +449,7 @@ class Front {
 		}
 
 		wp_reset_query();
+		$post = $_post;
 
 		return $thumbnail;
 	}
