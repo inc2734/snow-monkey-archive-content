@@ -23,11 +23,11 @@ foreach ( $all_pages as $_page ) {
 foreach ( $custom_post_types as $custom_post_type ) {
 	Framework::control(
 		'select',
-		Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ),
+		Helper::get_custom_post_archive_meta_name( 'page-id-2', $custom_post_type ),
 		[
-			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ),
-			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ) . __( 'The document title, OGP metadata, meta description, and meta thumbnail will be replaced with the information of the assigned page.', 'snow-monkey-archive-content' ),
-			'priority'        => 10,
+			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ) . '2',
+			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ) . __( 'This content will be displayed at the bottom of the post list.', 'snow-monkey-archive-content' ),
+			'priority'        => 11,
 			'default'         => 0,
 			'choices'         => $choices,
 			'active_callback' => function() use ( $custom_post_type ) {
@@ -45,6 +45,6 @@ $panel = Framework::get_panel( 'design' );
 
 foreach ( $custom_post_types as $custom_post_type ) {
 	$section = Framework::get_section( 'design-' . $custom_post_type . '-archive' );
-	$control = Framework::get_control( Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ) );
+	$control = Framework::get_control( Helper::get_custom_post_archive_meta_name( 'page-id-2', $custom_post_type ) );
 	$control->join( $section )->join( $panel );
 }

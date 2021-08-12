@@ -56,12 +56,14 @@ class Uninstall_Test extends WP_UnitTestCase {
 
 		foreach ( $terms as $term ) {
 			set_theme_mod( Helper::get_term_meta_name( 'page-id', $term ), $page_id );
+			set_theme_mod( Helper::get_term_meta_name( 'page-id-2', $term ), $page_id );
 		}
 
 		\Snow_Monkey\Plugin\ArchiveContent\uninstall_callback();
 
 		foreach ( $terms as $term ) {
 			$this->assertFalse( get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) ) );
+			$this->assertFalse( get_theme_mod( Helper::get_term_meta_name( 'page-id-2', $term ) ) );
 		}
 	}
 }

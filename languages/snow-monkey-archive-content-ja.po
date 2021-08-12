@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Snow Monkey Category Content\n"
-"POT-Creation-Date: 2021-02-02 13:37+0900\n"
-"PO-Revision-Date: 2021-02-02 13:37+0900\n"
+"POT-Creation-Date: 2021-08-12 18:43+0900\n"
+"PO-Revision-Date: 2021-08-12 18:44+0900\n"
 "Last-Translator: inc2734 <inc@2inc.org>\n"
 "Language-Team: inc2734 <inc@2inc.org>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
@@ -45,73 +45,113 @@ msgstr "割り当て 著者: %1$s"
 msgid "Assigned posts page"
 msgstr "割り当て 投稿ページ"
 
-#: App/Controller/Front.php:264
+#: App/Controller/Front.php:289
 msgid "Edit the page used as content"
 msgstr "コンテンツ用ページを編集"
 
 #: customizer/design/sections/author/controls/display-title.php:19
-#: customizer/design/sections/category/controls/display-title.php:19
+#: customizer/design/sections/category/controls/display-title.php:24
 #: customizer/design/sections/custom-post-archive/controls/display-title.php:19
-#: customizer/design/sections/custom-taxonomy/controls/display-title.php:23
+#: customizer/design/sections/custom-taxonomy/controls/display-title.php:29
 #: customizer/design/sections/home/controls/display-title.php:17
-#: customizer/design/sections/post-tag/controls/display-title.php:19
+#: customizer/design/sections/post-tag/controls/display-title.php:24
 msgid "Display page title"
 msgstr "ページタイトルを表示"
 
+#: customizer/design/sections/author/controls/page-id-2.php:16
 #: customizer/design/sections/author/controls/page-id.php:16
-#: customizer/design/sections/category/controls/page-id.php:16
+#: customizer/design/sections/category/controls/page-id-2.php:22
+#: customizer/design/sections/category/controls/page-id.php:22
+#: customizer/design/sections/custom-post-archive/controls/page-id-2.php:17
 #: customizer/design/sections/custom-post-archive/controls/page-id.php:17
-#: customizer/design/sections/custom-taxonomy/controls/page-id.php:21
+#: customizer/design/sections/custom-taxonomy/controls/page-id-2.php:27
+#: customizer/design/sections/custom-taxonomy/controls/page-id.php:27
+#: customizer/design/sections/home/controls/page-id-2.php:15
 #: customizer/design/sections/home/controls/page-id.php:15
-#: customizer/design/sections/post-tag/controls/page-id.php:16
+#: customizer/design/sections/post-tag/controls/page-id-2.php:22
+#: customizer/design/sections/post-tag/controls/page-id.php:22
 msgid "None"
 msgstr "なし"
 
+#: customizer/design/sections/author/controls/page-id-2.php:27
 #: customizer/design/sections/author/controls/page-id.php:27
-#: customizer/design/sections/category/controls/page-id.php:27
+#: customizer/design/sections/category/controls/page-id-2.php:33
+#: customizer/design/sections/category/controls/page-id.php:33
+#: customizer/design/sections/custom-post-archive/controls/page-id-2.php:28
 #: customizer/design/sections/custom-post-archive/controls/page-id.php:28
-#: customizer/design/sections/custom-taxonomy/controls/page-id.php:32
+#: customizer/design/sections/custom-taxonomy/controls/page-id-2.php:38
+#: customizer/design/sections/custom-taxonomy/controls/page-id.php:38
+#: customizer/design/sections/home/controls/page-id-2.php:25
 #: customizer/design/sections/home/controls/page-id.php:25
-#: customizer/design/sections/post-tag/controls/page-id.php:27
+#: customizer/design/sections/post-tag/controls/page-id-2.php:33
+#: customizer/design/sections/post-tag/controls/page-id.php:33
 msgid "The page used as content"
 msgstr "コンテンツとして使用されるページ"
 
+#: customizer/design/sections/author/controls/page-id-2.php:28
 #: customizer/design/sections/author/controls/page-id.php:28
-#: customizer/design/sections/category/controls/page-id.php:28
+#: customizer/design/sections/category/controls/page-id-2.php:34
+#: customizer/design/sections/category/controls/page-id.php:34
+#: customizer/design/sections/custom-post-archive/controls/page-id-2.php:29
 #: customizer/design/sections/custom-post-archive/controls/page-id.php:29
-#: customizer/design/sections/custom-taxonomy/controls/page-id.php:33
+#: customizer/design/sections/custom-taxonomy/controls/page-id-2.php:39
+#: customizer/design/sections/custom-taxonomy/controls/page-id.php:39
+#: customizer/design/sections/home/controls/page-id-2.php:26
 #: customizer/design/sections/home/controls/page-id.php:26
-#: customizer/design/sections/post-tag/controls/page-id.php:28
+#: customizer/design/sections/post-tag/controls/page-id-2.php:34
+#: customizer/design/sections/post-tag/controls/page-id.php:34
 msgid "You can select from the draft pages."
 msgstr "下書きの固定ページから選択できます。"
 
+#: customizer/design/sections/author/controls/page-id-2.php:28
+#: customizer/design/sections/category/controls/page-id-2.php:34
+#: customizer/design/sections/custom-post-archive/controls/page-id-2.php:29
+#: customizer/design/sections/custom-taxonomy/controls/page-id-2.php:39
+#: customizer/design/sections/home/controls/page-id-2.php:26
+#: customizer/design/sections/post-tag/controls/page-id-2.php:34
+msgid "This content will be displayed at the bottom of the post list."
+msgstr "このコンテンツは投稿リストの下部に表示されます。"
+
+#: customizer/design/sections/author/controls/page-id.php:28
+#: customizer/design/sections/category/controls/page-id.php:34
+#: customizer/design/sections/custom-post-archive/controls/page-id.php:29
+#: customizer/design/sections/custom-taxonomy/controls/page-id.php:39
+#: customizer/design/sections/home/controls/page-id.php:26
+#: customizer/design/sections/post-tag/controls/page-id.php:34
+msgid ""
+"The document title, OGP metadata, meta description, and meta thumbnail will "
+"be replaced with the information of the assigned page."
+msgstr ""
+"ドキュメントタイトル、OGP メタデータ、meta description、meta thumbnail は、"
+"割り当てられたページの情報に置き換えられます。"
+
 #: customizer/design/sections/author/controls/remove-top-margin.php:19
-#: customizer/design/sections/category/controls/remove-top-margin.php:19
+#: customizer/design/sections/category/controls/remove-top-margin.php:24
 #: customizer/design/sections/custom-post-archive/controls/remove-top-margin.php:19
-#: customizer/design/sections/custom-taxonomy/controls/remove-top-margin.php:23
+#: customizer/design/sections/custom-taxonomy/controls/remove-top-margin.php:29
 #: customizer/design/sections/home/controls/remove-top-margin.php:16
-#: customizer/design/sections/post-tag/controls/remove-top-margin.php:19
+#: customizer/design/sections/post-tag/controls/remove-top-margin.php:24
 msgid "Remove top margin of the content"
 msgstr "コンテンツ上部の余白を削除"
 
-#: customizer/design/sections/category/controls/replace-title.php:19
+#: customizer/design/sections/category/controls/replace-title.php:24
 #: customizer/design/sections/custom-post-archive/controls/replace-title.php:19
-#: customizer/design/sections/custom-taxonomy/controls/replace-title.php:23
+#: customizer/design/sections/custom-taxonomy/controls/replace-title.php:29
 #: customizer/design/sections/home/controls/replace-title.php:16
-#: customizer/design/sections/post-tag/controls/replace-title.php:19
+#: customizer/design/sections/post-tag/controls/replace-title.php:24
 msgid "Replace page title"
 msgstr "ページタイトルを置換"
 
-#: snow-monkey-archive-content.php:86
+#: snow-monkey-archive-content.php:53
 msgid "[Snow Monkey Archive Content] Needs the Snow Monkey."
 msgstr "[Snow Monkey Archive Content] Snow Monkey が必要です。"
 
-#: snow-monkey-archive-content.php:104
+#: snow-monkey-archive-content.php:84
 #, php-format
 msgid "[Snow Monkey Archive Content] Needs the Snow Monkey %1$s or more."
 msgstr "[Snow Monkey Archive Content] Snow Monkey %1$s 以上が必要です。"
 
-#: snow-monkey-archive-content.php:123
+#: snow-monkey-archive-content.php:106
 msgid ""
 "[Snow Monkey Archive Content] Cannot be activated with the Snow Monkey "
 "Category Content. Stop the Snow Monkey Category Content."
@@ -124,8 +164,11 @@ msgid "Snow Monkey Archive Content"
 msgstr "Snow Monkey Archive Content"
 
 #. Description of the plugin/theme
-msgid "Require Snow Monkey v7.9 or more"
-msgstr "Snow Monkey v7.9 以上が必要です"
+msgid ""
+"Activating this plug-in, you will be able to assign pages to archive pages."
+msgstr ""
+"このプラグインをアクティブにするとページをアーカイブページに割り当てることが"
+"できます。"
 
 #. Author of the plugin/theme
 msgid "inc2734"
@@ -134,3 +177,6 @@ msgstr "inc2734"
 #. Author URI of the plugin/theme
 msgid "https://2inc.org"
 msgstr "https://2inc.org"
+
+#~ msgid "Require Snow Monkey v7.9 or more"
+#~ msgstr "Snow Monkey v7.9 以上が必要です"

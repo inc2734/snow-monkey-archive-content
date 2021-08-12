@@ -31,7 +31,7 @@ foreach ( $all_terms as $_term ) {
 		Helper::get_term_meta_name( 'page-id', $_term ),
 		[
 			'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ),
-			'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ),
+			'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ) . __( 'The document title, OGP metadata, meta description, and meta thumbnail will be replaced with the information of the assigned page.', 'snow-monkey-archive-content' ),
 			'priority'    => 10,
 			'default'     => 0,
 			'choices'     => $choices,

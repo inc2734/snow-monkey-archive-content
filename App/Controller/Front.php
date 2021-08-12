@@ -46,6 +46,11 @@ class Front {
 					[ $this, '_add_content' ]
 				);
 
+				add_action(
+					'snow_monkey_after_archive_entry_content',
+					[ $this, '_add_content_2' ]
+				);
+
 				add_filter( 'document_title_parts', [ $this, '_replace_document_title' ] );
 
 				add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
@@ -103,7 +108,7 @@ class Front {
 	}
 
 	/**
-	 * Add category archive page content.
+	 * Add category archive page content to before posts list.
 	 */
 	public function _add_content() {
 		$page_id = $this->_get_assigned_page_id();
@@ -124,7 +129,39 @@ class Front {
 		?>
 		<?php while ( have_posts() ) : ?>
 			<?php the_post(); ?>
-			<div class="post-<?php echo esc_attr( $page_id ); ?>" id="snow-monkey-archive-content-body">
+			<div class="post-<?php echo esc_attr( $page_id ); ?> snow-monkey-archive-content-body" id="snow-monkey-archive-content-body">
+				<div class="c-entry__content p-entry-content">
+					<?php the_content(); ?>
+				</div>
+			</div>
+		<?php endwhile; ?>
+		<?php
+		wp_reset_query();
+	}
+
+	/**
+	 * Add category archive page content to after posts list.
+	 */
+	public function _add_content_2() {
+		$page_id = $this->_get_assigned_page_id_2();
+		if ( ! $page_id ) {
+			return;
+		}
+
+		query_posts(
+			[
+				'page_id'     => $page_id,
+				'post_status' => get_post_status( $page_id ),
+			]
+		);
+
+		if ( ! have_posts() ) {
+			return;
+		}
+		?>
+		<?php while ( have_posts() ) : ?>
+			<?php the_post(); ?>
+			<div class="post-<?php echo esc_attr( $page_id ); ?> snow-monkey-archive-content-body" id="snow-monkey-archive-content-body-2">
 				<div class="c-entry__content p-entry-content">
 					<?php the_content(); ?>
 				</div>
@@ -405,17 +442,36 @@ class Front {
 	 * @return int|false
 	 */
 	protected function _get_assigned_page_id() {
+		return $this->_get_assigned_page_id_with_id( 'page-id' );
+	}
+
+	/**
+	 * Return assigned page id 2.
+	 *
+	 * @return int|false
+	 */
+	protected function _get_assigned_page_id_2() {
+		return $this->_get_assigned_page_id_with_id( 'page-id-2' );
+	}
+
+	/**
+	 * Return assigned page id 1/2.
+	 *
+	 * @param string $meta_id Meta name. page-id or page-id-2.
+	 * @return int|false
+	 */
+	protected function _get_assigned_page_id_with_id( $meta_id ) {
 		if ( is_category() || is_tag() || is_tax() ) {
 			$term    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
+			$page_id = get_theme_mod( Helper::get_term_meta_name( $meta_id, $term ) );
 		} elseif ( is_post_type_archive() ) {
 			$post_type_object = get_queried_object();
-			$page_id          = get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $post_type_object->name ) );
+			$page_id          = get_theme_mod( Helper::get_custom_post_archive_meta_name( $meta_id, $post_type_object->name ) );
 		} elseif ( is_author() ) {
 			$user    = get_queried_object();
-			$page_id = get_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );
+			$page_id = get_theme_mod( Helper::get_author_meta_name( $meta_id, $user ) );
 		} elseif ( is_home() ) {
-			$page_id = get_theme_mod( Helper::get_home_meta_name( 'page-id' ) );
+			$page_id = get_theme_mod( Helper::get_home_meta_name( $meta_id ) );
 		}
 
 		if ( empty( $page_id ) || 'draft' !== get_post_status( $page_id ) ) {

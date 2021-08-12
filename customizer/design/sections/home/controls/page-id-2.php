@@ -20,11 +20,11 @@ foreach ( $all_pages as $_page ) {
 
 Framework::control(
 	'select',
-	Helper::get_home_meta_name( 'page-id' ),
+	Helper::get_home_meta_name( 'page-id-2' ),
 	[
-		'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ),
-		'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ) . __( 'The document title, OGP metadata, meta description, and meta thumbnail will be replaced with the information of the assigned page.', 'snow-monkey-archive-content' ),
-		'priority'    => 10,
+		'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ) . '2',
+		'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ) . __( 'This content will be displayed at the bottom of the post list.', 'snow-monkey-archive-content' ),
+		'priority'    => 11,
 		'default'     => 0,
 		'choices'     => $choices,
 	]
@@ -36,5 +36,5 @@ if ( ! is_customize_preview() ) {
 
 $panel   = Framework::get_panel( 'design' );
 $section = Framework::get_section( 'design-home' );
-$control = Framework::get_control( Helper::get_home_meta_name( 'page-id' ) );
+$control = Framework::get_control( Helper::get_home_meta_name( 'page-id-2' ) );
 $control->join( $section )->join( $panel );

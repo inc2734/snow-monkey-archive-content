@@ -172,23 +172,27 @@ function uninstall_callback() {
 
 	foreach ( $terms as $term ) {
 		remove_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
+		remove_theme_mod( Helper::get_term_meta_name( 'page-id-2', $term ) );
 		remove_theme_mod( Helper::get_term_meta_name( 'display-title', $term ) );
 		remove_theme_mod( Helper::get_term_meta_name( 'remove-top-margin', $term ) );
 	}
 
 	foreach ( $custom_post_types as $custom_post_type ) {
 		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ) );
+		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id-2', $custom_post_type ) );
 		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'display-title', $custom_post_type ) );
 		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'remove-top-margin', $custom_post_type ) );
 	}
 
 	foreach ( $users as $user ) {
 		remove_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );
+		remove_theme_mod( Helper::get_author_meta_name( 'page-id-2', $user ) );
 		remove_theme_mod( Helper::get_author_meta_name( 'display-title', $user ) );
 		remove_theme_mod( Helper::get_author_meta_name( 'remove-top-margin', $user ) );
 	}
 
 	remove_theme_mod( Helper::get_home_meta_name( 'page-id' ) );
+	remove_theme_mod( Helper::get_home_meta_name( 'page-id-2' ) );
 	remove_theme_mod( Helper::get_home_meta_name( 'display-title' ) );
 	remove_theme_mod( Helper::get_home_meta_name( 'remove-top-margin' ) );
 }
