@@ -191,10 +191,6 @@ class Front {
 	 * Enqueue assets.
 	 */
 	public function _wp_enqueue_scripts() {
-		if ( ! is_user_logged_in() ) {
-			return;
-		}
-
 		wp_enqueue_style(
 			'snow-monkey-archive-content',
 			SNOW_MONKEY_ARCHIVE_CONTENT_URL . '/dist/css/app.css',
