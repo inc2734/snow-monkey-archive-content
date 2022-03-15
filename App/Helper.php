@@ -17,11 +17,6 @@ class Helper {
 	 * @return array
 	 */
 	public static function get_draft_pages() {
-		$pages = wp_cache_get( 'snow-monkey-archive-content', 'draft-pages' );
-		if ( is_array( $pages ) ) {
-			return $pages;
-		}
-
 		$pages = get_pages(
 			[
 				'parent'      => 0,
@@ -29,7 +24,6 @@ class Helper {
 			]
 		);
 
-		wp_cache_set( 'snow-monkey-archive-content', $pages, 'draft-pages' );
 		return $pages;
 	}
 
