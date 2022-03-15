@@ -27,7 +27,7 @@ class Uninstall_Test extends WP_UnitTestCase {
 		\Snow_Monkey\Plugin\ArchiveContent\uninstall_callback();
 
 		foreach ( $terms as $term ) {
-			$this->assertFalse( get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) ) );
+			$this->assertFalse( boolval( get_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) ) ) );
 		}
 	}
 
