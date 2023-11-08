@@ -18,7 +18,7 @@ class Customizer {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action( 'snow_monkey_post_load_customizer', [ $this, '_load_customizer' ] );
+		add_action( 'snow_monkey_post_load_customizer', array( $this, '_load_customizer' ) );
 	}
 
 	/**
@@ -41,14 +41,14 @@ class Customizer {
 			$filepath = $file->getPathname();
 			$basename = basename( dirname( dirname( $filepath ) ) );
 
-			$sections = [
+			$sections = array(
 				'author',
 				'category',
 				'custom-post-archive',
 				'custom-taxonomy',
 				'home',
 				'post-tag',
-			];
+			);
 
 			if ( in_array( $basename, $sections, true ) ) {
 				$enable_section = apply_filters( 'snow_monkey_archive_content_enable_assignment_' . $basename, true );

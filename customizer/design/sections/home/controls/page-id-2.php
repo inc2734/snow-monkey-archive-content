@@ -11,9 +11,9 @@ use Framework\Controller\Controller;
 
 $all_pages = Helper::get_draft_pages();
 
-$choices = [
+$choices = array(
 	0 => __( 'None', 'snow-monkey-archive-content' ),
-];
+);
 foreach ( $all_pages as $_page ) {
 	$choices[ $_page->ID ] = $_page->post_title;
 }
@@ -21,13 +21,13 @@ foreach ( $all_pages as $_page ) {
 Framework::control(
 	'select',
 	Helper::get_home_meta_name( 'page-id-2' ),
-	[
+	array(
 		'label'       => __( 'The page used as content', 'snow-monkey-archive-content' ) . '2',
 		'description' => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ) . __( 'This content will be displayed at the bottom of the post list.', 'snow-monkey-archive-content' ),
 		'priority'    => 11,
 		'default'     => 0,
 		'choices'     => $choices,
-	]
+	)
 );
 
 if ( ! is_customize_preview() ) {

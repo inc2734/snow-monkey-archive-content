@@ -15,14 +15,14 @@ foreach ( $custom_post_types as $custom_post_type ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_custom_post_archive_meta_name( 'display-title', $custom_post_type ),
-		[
+		array(
 			'label'           => __( 'Display page title', 'snow-monkey-archive-content' ),
 			'priority'        => 11,
 			'default'         => true,
 			'active_callback' => function() use ( $custom_post_type ) {
 				return is_post_type_archive( $custom_post_type );
 			},
-		]
+		)
 	);
 }
 

@@ -15,7 +15,7 @@ foreach ( $custom_post_types as $custom_post_type ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_custom_post_archive_meta_name( 'replace-title', $custom_post_type ),
-		[
+		array(
 			'label'           => __( 'Replace page title', 'snow-monkey-archive-content' ),
 			'priority'        => 12,
 			'default'         => false,
@@ -24,7 +24,7 @@ foreach ( $custom_post_types as $custom_post_type ) {
 						&& get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ) )
 						&& get_theme_mod( Helper::get_custom_post_archive_meta_name( 'display-title', $custom_post_type ) );
 			},
-		]
+		)
 	);
 }
 

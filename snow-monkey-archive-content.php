@@ -3,9 +3,9 @@
  * Plugin name: Snow Monkey Archive Content
  * Description: Activating this plug-in, you will be able to assign pages to archive pages.
  * Version: 1.0.6
- * Tested up to: 5.9
- * Requires at least: 5.6
- * Requires PHP: 5.6
+ * Tested up to: 6.4
+ * Requires at least: 7.4
+ * Requires PHP: 7.4
  * Requires Snow Monkey: 15.3.0
  * Author: inc2734
  * Author URI: https://2inc.org
@@ -31,7 +31,7 @@ class Bootstrap {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_action( 'plugins_loaded', [ $this, '_plugins_loaded' ] );
+		add_action( 'plugins_loaded', array( $this, '_plugins_loaded' ) );
 	}
 
 	/**
@@ -40,7 +40,7 @@ class Bootstrap {
 	public function _plugins_loaded() {
 		load_plugin_textdomain( 'snow-monkey-archive-content', false, basename( __DIR__ ) . '/languages' );
 
-		add_action( 'init', [ $this, '_activate_autoupdate' ] );
+		add_action( 'init', array( $this, '_activate_autoupdate' ) );
 
 		$theme = wp_get_theme( get_template() );
 		if ( 'snow-monkey' !== $theme->template && 'snow-monkey/resources' !== $theme->template ) {
@@ -61,9 +61,9 @@ class Bootstrap {
 
 		$data = get_file_data(
 			__FILE__,
-			[
+			array(
 				'RequiresSnowMonkey' => 'Requires Snow Monkey',
-			]
+			)
 		);
 
 		if (
@@ -125,9 +125,9 @@ class Bootstrap {
 			plugin_basename( __FILE__ ),
 			'inc2734',
 			'snow-monkey-archive-content',
-			[
+			array(
 				'homepage' => 'https://snow-monkey.2inc.org',
-			]
+			)
 		);
 	}
 }
@@ -140,17 +140,17 @@ new Bootstrap();
  */
 function uninstall_callback() {
 	$categories = Helper::get_terms(
-		[
+		array(
 			'taxonomy'   => 'category',
 			'hide_empty' => false,
-		]
+		)
 	);
 
 	$post_tags = Helper::get_terms(
-		[
+		array(
 			'taxonomy'   => 'post_tag',
 			'hide_empty' => false,
-		]
+		)
 	);
 
 	$terms             = array_merge( $categories, $post_tags );
@@ -162,10 +162,10 @@ function uninstall_callback() {
 		$terms = array_merge(
 			$terms,
 			Helper::get_terms(
-				[
+				array(
 					'taxonomy'   => $_taxonomy,
 					'hide_empty' => false,
-				]
+				)
 			)
 		);
 	}

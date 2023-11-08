@@ -13,11 +13,11 @@ use Framework\Controller\Controller;
 Framework::control(
 	'checkbox',
 	Helper::get_home_meta_name( 'display-title' ),
-	[
+	array(
 		'label'    => __( 'Display page title', 'snow-monkey-archive-content' ),
 		'priority' => 11,
 		'default'  => true,
-	]
+	)
 );
 
 if ( ! is_customize_preview() ) {

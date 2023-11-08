@@ -33,37 +33,37 @@ class Front {
 
 				add_filter(
 					'snow_monkey_template_part_render_template-parts/archive/entry/header/header',
-					[ $this, '_replace_page_title' ]
+					array( $this, '_replace_page_title' )
 				);
 
 				add_filter(
 					'snow_monkey_template_part_render_template-parts/common/page-header',
-					[ $this, '_replace_page_title' ]
+					array( $this, '_replace_page_title' )
 				);
 
 				add_action(
 					'snow_monkey_before_archive_entry_content',
-					[ $this, '_add_content' ]
+					array( $this, '_add_content' )
 				);
 
 				add_action(
 					'snow_monkey_after_archive_entry_content',
-					[ $this, '_add_content_2' ]
+					array( $this, '_add_content_2' )
 				);
 
-				add_filter( 'document_title_parts', [ $this, '_replace_document_title' ] );
+				add_filter( 'document_title_parts', array( $this, '_replace_document_title' ) );
 
-				add_action( 'wp_enqueue_scripts', [ $this, '_wp_enqueue_scripts' ], 100 );
-				add_action( 'wp_head', [ $this, '_hide_page_title' ] );
-				add_action( 'wp_head', [ $this, '_remove_top_margin' ] );
-				add_action( 'wp_head', [ $this, '_remove_term_description' ] );
-				add_action( 'admin_bar_menu', [ $this, '_admin_bar_menu' ], 100 );
+				add_action( 'wp_enqueue_scripts', array( $this, '_wp_enqueue_scripts' ), 100 );
+				add_action( 'wp_head', array( $this, '_hide_page_title' ) );
+				add_action( 'wp_head', array( $this, '_remove_top_margin' ) );
+				add_action( 'wp_head', array( $this, '_remove_term_description' ) );
+				add_action( 'admin_bar_menu', array( $this, '_admin_bar_menu' ), 100 );
 
-				add_filter( 'inc2734_wp_ogp_title', [ $this, '_ogp_title' ], 11 );
-				add_filter( 'inc2734_wp_ogp_description', [ $this, '_ogp_description' ], 11 );
-				add_filter( 'inc2734_wp_ogp_image', [ $this, '_ogp_image' ], 11 );
-				add_filter( 'inc2734_wp_seo_description', [ $this, '_seo_description' ], 11 );
-				add_filter( 'inc2734_wp_seo_thumbnail', [ $this, '_seo_thumbnail' ], 11 );
+				add_filter( 'inc2734_wp_ogp_title', array( $this, '_ogp_title' ), 11 );
+				add_filter( 'inc2734_wp_ogp_description', array( $this, '_ogp_description' ), 11 );
+				add_filter( 'inc2734_wp_ogp_image', array( $this, '_ogp_image' ), 11 );
+				add_filter( 'inc2734_wp_seo_description', array( $this, '_seo_description' ), 11 );
+				add_filter( 'inc2734_wp_seo_thumbnail', array( $this, '_seo_thumbnail' ), 11 );
 			}
 		);
 	}
@@ -98,10 +98,10 @@ class Front {
 		}
 
 		return preg_replace(
-			[
+			array(
 				'|(<h1 class="c-entry__title">).*?(</h1>)|ms',
 				'|(<h1 class="c-page-header__title">).*?(</h1>)|ms',
-			],
+			),
 			'$1' . get_the_title( $page_id ) . '$2',
 			$html
 		);
@@ -120,10 +120,10 @@ class Front {
 		$_post = empty( $post ) ? $post : clone $post;
 
 		query_posts(
-			[
+			array(
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
-			]
+			)
 		);
 		?>
 		<?php while ( have_posts() ) : ?>
@@ -152,10 +152,10 @@ class Front {
 		$_post = empty( $post ) ? $post : clone $post;
 
 		query_posts(
-			[
+			array(
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
-			]
+			)
 		);
 		?>
 		<?php while ( have_posts() ) : ?>
@@ -194,7 +194,7 @@ class Front {
 		wp_enqueue_style(
 			'snow-monkey-archive-content',
 			SNOW_MONKEY_ARCHIVE_CONTENT_URL . '/dist/css/app.css',
-			[ \Framework\Helper::get_main_style_handle() ],
+			array( \Framework\Helper::get_main_style_handle() ),
 			filemtime( SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/dist/css/app.css' )
 		);
 	}
@@ -277,22 +277,22 @@ class Front {
 		$page_id = $this->_get_assigned_page_id();
 		if ( $page_id ) {
 			$wp_adminbar->add_node(
-				[
+				array(
 					'id'    => 'snow-monkey-archive-content-edit-page',
 					'title' => __( 'Edit the page used as content', 'snow-monkey-archive-content' ),
 					'href'  => get_edit_post_link( $page_id, 'url' ),
-				]
+				)
 			);
 		}
 
 		$page_id_2 = $this->_get_assigned_page_id_2();
 		if ( $page_id_2 ) {
 			$wp_adminbar->add_node(
-				[
+				array(
 					'id'    => 'snow-monkey-archive-content-edit-page-2',
 					'title' => __( 'Edit the page used as content', 'snow-monkey-archive-content' ) . '2',
 					'href'  => get_edit_post_link( $page_id_2, 'url' ),
-				]
+				)
 			);
 		}
 	}
@@ -332,10 +332,10 @@ class Front {
 		$_post = empty( $post ) ? $post : clone $post;
 
 		query_posts(
-			[
+			array(
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
-			]
+			)
 		);
 
 		while ( have_posts() ) {
@@ -368,10 +368,10 @@ class Front {
 		$_post = empty( $post ) ? $post : clone $post;
 
 		query_posts(
-			[
+			array(
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
-			]
+			)
 		);
 
 		while ( have_posts() ) {
@@ -406,10 +406,10 @@ class Front {
 		$_post = empty( $post ) ? $post : clone $post;
 
 		query_posts(
-			[
+			array(
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
-			]
+			)
 		);
 
 		while ( have_posts() ) {
@@ -442,10 +442,10 @@ class Front {
 		$_post = empty( $post ) ? $post : clone $post;
 
 		query_posts(
-			[
+			array(
 				'page_id'     => $page_id,
 				'post_status' => get_post_status( $page_id ),
-			]
+			)
 		);
 
 		while ( have_posts() ) {

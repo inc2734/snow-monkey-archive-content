@@ -13,9 +13,9 @@ $custom_post_types = Helper::get_custom_post_types();
 
 $all_pages = Helper::get_draft_pages();
 
-$choices = [
+$choices = array(
 	0 => __( 'None', 'snow-monkey-archive-content' ),
-];
+);
 foreach ( $all_pages as $_page ) {
 	$choices[ $_page->ID ] = $_page->post_title;
 }
@@ -24,7 +24,7 @@ foreach ( $custom_post_types as $custom_post_type ) {
 	Framework::control(
 		'select',
 		Helper::get_custom_post_archive_meta_name( 'page-id-2', $custom_post_type ),
-		[
+		array(
 			'label'           => __( 'The page used as content', 'snow-monkey-archive-content' ) . '2',
 			'description'     => __( 'You can select from the draft pages.', 'snow-monkey-archive-content' ) . __( 'This content will be displayed at the bottom of the post list.', 'snow-monkey-archive-content' ),
 			'priority'        => 11,
@@ -33,7 +33,7 @@ foreach ( $custom_post_types as $custom_post_type ) {
 			'active_callback' => function() use ( $custom_post_type ) {
 				return is_post_type_archive( $custom_post_type );
 			},
-		]
+		)
 	);
 }
 

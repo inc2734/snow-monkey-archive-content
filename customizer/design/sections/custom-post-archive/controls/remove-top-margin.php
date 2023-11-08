@@ -15,14 +15,14 @@ foreach ( $custom_post_types as $custom_post_type ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_custom_post_archive_meta_name( 'remove-top-margin', $custom_post_type ),
-		[
+		array(
 			'label'           => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
 			'priority'        => 13,
 			'default'         => false,
 			'active_callback' => function() use ( $custom_post_type ) {
 				return is_post_type_archive( $custom_post_type );
 			},
-		]
+		)
 	);
 }
 

@@ -15,11 +15,11 @@ foreach ( $all_users as $user ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_author_meta_name( 'remove-top-margin', $user ),
-		[
+		array(
 			'label'    => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
 			'priority' => 12,
 			'default'  => false,
-		]
+		)
 	);
 }
 

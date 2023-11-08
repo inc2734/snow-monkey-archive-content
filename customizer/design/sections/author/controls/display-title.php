@@ -15,11 +15,11 @@ foreach ( $all_users as $user ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_author_meta_name( 'display-title', $user ),
-		[
+		array(
 			'label'    => __( 'Display page title', 'snow-monkey-archive-content' ),
 			'priority' => 11,
 			'default'  => true,
-		]
+		)
 	);
 }
 

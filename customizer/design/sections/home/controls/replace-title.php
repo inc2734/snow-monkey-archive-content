@@ -12,7 +12,7 @@ use Framework\Controller\Controller;
 Framework::control(
 	'checkbox',
 	Helper::get_home_meta_name( 'replace-title' ),
-	[
+	array(
 		'label'           => __( 'Replace page title', 'snow-monkey-archive-content' ),
 		'priority'        => 12,
 		'default'         => false,
@@ -20,7 +20,7 @@ Framework::control(
 			return get_theme_mod( Helper::get_home_meta_name( 'page-id' ) )
 					&& get_theme_mod( Helper::get_home_meta_name( 'display-title' ) );
 		},
-	]
+	)
 );
 
 if ( ! is_customize_preview() ) {

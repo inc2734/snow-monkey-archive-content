@@ -10,21 +10,21 @@ use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
 use Framework\Controller\Controller;
 
 $all_terms = Helper::get_terms(
-	[
+	array(
 		'taxonomy'   => 'category',
 		'hide_empty' => false,
-	]
+	)
 );
 
 foreach ( $all_terms as $_term ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_term_meta_name( 'display-title', $_term ),
-		[
+		array(
 			'label'    => __( 'Display page title', 'snow-monkey-archive-content' ),
 			'priority' => 11,
 			'default'  => true,
-		]
+		)
 	);
 }
 

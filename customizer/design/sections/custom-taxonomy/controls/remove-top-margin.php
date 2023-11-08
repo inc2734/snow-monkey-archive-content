@@ -15,21 +15,21 @@ if ( ! $taxonomies ) {
 }
 
 $all_terms = Helper::get_terms(
-	[
+	array(
 		'taxonomy'   => $taxonomies,
 		'hide_empty' => false,
-	]
+	)
 );
 
 foreach ( $all_terms as $_term ) {
 	Framework::control(
 		'checkbox',
 		Helper::get_term_meta_name( 'remove-top-margin', $_term ),
-		[
+		array(
 			'label'    => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
 			'priority' => 13,
 			'default'  => false,
-		]
+		)
 	);
 }
 

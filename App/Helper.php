@@ -18,10 +18,10 @@ class Helper {
 	 */
 	public static function get_draft_pages() {
 		$pages = get_pages(
-			[
+			array(
 				'parent'      => 0,
 				'post_status' => 'draft',
-			]
+			)
 		);
 
 		return $pages;
@@ -33,7 +33,7 @@ class Helper {
 	 * @param array|string $args Array or string of arguments.
 	 * @return array
 	 */
-	public static function get_terms( $args = [] ) {
+	public static function get_terms( $args = array() ) {
 		return Snow_Monkey_Helper::get_terms( $args );
 	}
 
@@ -119,7 +119,7 @@ class Helper {
 		}
 
 		$theme_mods = get_theme_mods();
-		$terms      = [];
+		$terms      = array();
 
 		foreach ( $theme_mods as $key => $value ) {
 			if ( ! preg_match( '|^snow-monkey-archive-content/term/(.+?)/(\d+?)/page-id(-\d)?$|', $key, $matches ) ) {
@@ -163,7 +163,7 @@ class Helper {
 		}
 
 		$theme_mods        = get_theme_mods();
-		$custom_post_types = [];
+		$custom_post_types = array();
 
 		foreach ( $theme_mods as $key => $value ) {
 			if ( ! preg_match( '|^snow-monkey-archive-content/custom-post-types/(.+)/page-id(-\d)?$|', $key, $matches ) ) {
@@ -207,7 +207,7 @@ class Helper {
 		}
 
 		$theme_mods = get_theme_mods();
-		$users      = [];
+		$users      = array();
 
 		foreach ( $theme_mods as $key => $value ) {
 			if ( ! preg_match( '|^snow-monkey-archive-content/author/(.+)/page-id(-\d)?$|', $key, $matches ) ) {

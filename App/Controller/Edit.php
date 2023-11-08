@@ -15,10 +15,10 @@ class Edit {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_filter( 'display_post_states', [ $this, '_display_assigned_term' ], 10, 2 );
-		add_filter( 'display_post_states', [ $this, '_display_assigned_custom_post_type' ], 10, 2 );
-		add_filter( 'display_post_states', [ $this, '_display_assigned_user' ], 10, 2 );
-		add_filter( 'display_post_states', [ $this, '_display_assigned_home' ], 10, 2 );
+		add_filter( 'display_post_states', array( $this, '_display_assigned_term' ), 10, 2 );
+		add_filter( 'display_post_states', array( $this, '_display_assigned_custom_post_type' ), 10, 2 );
+		add_filter( 'display_post_states', array( $this, '_display_assigned_user' ), 10, 2 );
+		add_filter( 'display_post_states', array( $this, '_display_assigned_home' ), 10, 2 );
 	}
 
 	/**

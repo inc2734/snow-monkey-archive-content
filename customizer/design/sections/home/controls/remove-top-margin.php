@@ -12,11 +12,11 @@ use Framework\Controller\Controller;
 Framework::control(
 	'checkbox',
 	Helper::get_home_meta_name( 'remove-top-margin' ),
-	[
+	array(
 		'label'    => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
 		'priority' => 13,
 		'default'  => false,
-	]
+	)
 );
 
 if ( ! is_customize_preview() ) {
