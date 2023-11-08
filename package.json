@@ -45,7 +45,7 @@
 		"css:app": "node-sass src/css/app.scss -o dist/css && postcss dist/css/app.css -r -c=postcss.config.js",
 		"css": "npm run clean:css && npm-run-all -p css:*",
 		"build": "npm-run-all -p css",
-		"zip:pack": "rsync -a --exclude='/vendor' --exclude='/node_modules' --exclude='.*' --exclude='*.config.js' --exclude='*.xml.dist' --exclude='*.ruleset.xml' --exclude='/bin' --exclude='/tests' --exclude='package*.json' . snow-monkey-archive-content && wp-env start && npm run composer install -- --no-dev -d snow-monkey-archive-content'",
+		"zip:pack": "rsync -a --exclude='/vendor' --exclude='/node_modules' --exclude='.*' --exclude='*.config.js' --exclude='*.xml.dist' --exclude='*.ruleset.xml' --exclude='/bin' --exclude='/tests' --exclude='package*.json' . snow-monkey-archive-content && wp-env start && npm run composer install -- --no-dev -d snow-monkey-archive-content",
 		"zip:archive": "zip -9 -qmr snow-monkey-archive-content.zip snow-monkey-archive-content",
 		"zip": "npm run clean:zip && npm run zip:pack && npm run zip:archive"
 	}
