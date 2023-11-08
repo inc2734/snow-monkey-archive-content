@@ -11,3 +11,4 @@ snow-monkey-archive-content.zip
 .wp-env.override.json
 /sql/
 /.export/*
+.phpunit.result.cache
