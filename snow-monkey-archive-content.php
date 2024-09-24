@@ -2,7 +2,7 @@
 /**
  * Plugin name: Snow Monkey Archive Content
  * Description: Activating this plug-in, you will be able to assign pages to archive pages.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Tested up to: 6.6
  * Requires at least: 5.6
  * Requires PHP: 7.4
