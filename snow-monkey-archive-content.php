@@ -3,7 +3,7 @@
  * Plugin name: Snow Monkey Archive Content
  * Description: Activating this plug-in, you will be able to assign pages to archive pages.
  * Version: 1.2.0
- * Tested up to: 6.5
+ * Tested up to: 6.6
  * Requires at least: 5.6
  * Requires PHP: 7.4
  * Requires Snow Monkey: 15.3.0
@@ -46,7 +46,7 @@ class Bootstrap {
 		if ( 'snow-monkey' !== $theme->template && 'snow-monkey/resources' !== $theme->template ) {
 			add_action(
 				'admin_notices',
-				function() {
+				function () {
 					?>
 					<div class="notice notice-warning is-dismissible">
 						<p>
@@ -72,14 +72,14 @@ class Bootstrap {
 		) {
 			add_action(
 				'admin_notices',
-				function() use ( $data ) {
+				function () use ( $data ) {
 					?>
 					<div class="notice notice-warning is-dismissible">
 						<p>
 							<?php
 							echo esc_html(
 								sprintf(
-									// translators: %1$s: version
+									// translators: %1$s: version.
 									__(
 										'[Snow Monkey Archive Content] Needs the Snow Monkey %1$s or more.',
 										'snow-monkey-archive-content'
@@ -99,7 +99,7 @@ class Bootstrap {
 		if ( class_exists( '\Snow_Monkey\Plugin\CategoryContent\Bootstrap' ) ) {
 			add_action(
 				'admin_notices',
-				function() {
+				function () {
 					?>
 					<div class="notice notice-warning is-dismissible">
 						<p>
@@ -132,7 +132,7 @@ class Bootstrap {
 	}
 }
 
-require_once( SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/vendor/autoload.php' );
+require_once SNOW_MONKEY_ARCHIVE_CONTENT_PATH . '/vendor/autoload.php';
 new Bootstrap();
 
 /**

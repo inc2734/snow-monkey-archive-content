@@ -19,7 +19,7 @@ foreach ( $custom_post_types as $custom_post_type ) {
 			'label'           => __( 'Replace page title', 'snow-monkey-archive-content' ),
 			'priority'        => 12,
 			'default'         => false,
-			'active_callback' => function() use ( $custom_post_type ) {
+			'active_callback' => function () use ( $custom_post_type ) {
 				return is_post_type_archive( $custom_post_type )
 						&& get_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ) )
 						&& get_theme_mod( Helper::get_custom_post_archive_meta_name( 'display-title', $custom_post_type ) );

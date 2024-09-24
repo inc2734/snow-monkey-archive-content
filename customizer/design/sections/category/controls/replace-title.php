@@ -24,7 +24,7 @@ foreach ( $all_terms as $_term ) {
 			'label'           => __( 'Replace page title', 'snow-monkey-archive-content' ),
 			'priority'        => 12,
 			'default'         => false,
-			'active_callback' => function() use ( $_term ) {
+			'active_callback' => function () use ( $_term ) {
 				return get_theme_mod( Helper::get_term_meta_name( 'page-id', $_term ) )
 						&& get_theme_mod( Helper::get_term_meta_name( 'display-title', $_term ) );
 			},

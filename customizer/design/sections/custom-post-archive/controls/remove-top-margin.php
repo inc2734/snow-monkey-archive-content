@@ -19,7 +19,7 @@ foreach ( $custom_post_types as $custom_post_type ) {
 			'label'           => __( 'Remove top margin of the content', 'snow-monkey-archive-content' ),
 			'priority'        => 13,
 			'default'         => false,
-			'active_callback' => function() use ( $custom_post_type ) {
+			'active_callback' => function () use ( $custom_post_type ) {
 				return is_post_type_archive( $custom_post_type );
 			},
 		)

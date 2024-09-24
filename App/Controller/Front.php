@@ -17,7 +17,7 @@ class Front {
 	public function __construct() {
 		add_action(
 			'wp',
-			function() {
+			function () {
 				if ( is_search() ) {
 					return;
 				}
@@ -119,6 +119,7 @@ class Front {
 		global $post;
 		$_post = empty( $post ) ? $post : clone $post;
 
+		// phpcs:ignore WordPress.WP.DiscouragedFunctions.query_posts_query_posts
 		query_posts(
 			array(
 				'page_id'     => $page_id,
@@ -135,8 +136,8 @@ class Front {
 			</div>
 		<?php endwhile; ?>
 		<?php
-		wp_reset_query();
-		$post = $_post;
+		wp_reset_query(); // phpcs:ignore WordPress.WP.DiscouragedFunctions.wp_reset_query_wp_reset_query
+		$post = $_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 	}
 
 	/**
@@ -151,6 +152,7 @@ class Front {
 		global $post;
 		$_post = empty( $post ) ? $post : clone $post;
 
+		// phpcs:ignore WordPress.WP.DiscouragedFunctions.query_posts_query_posts
 		query_posts(
 			array(
 				'page_id'     => $page_id,
@@ -167,8 +169,8 @@ class Front {
 			</div>
 		<?php endwhile; ?>
 		<?php
-		wp_reset_query();
-		$post = $_post;
+		wp_reset_query(); // phpcs:ignore WordPress.WP.DiscouragedFunctions.wp_reset_query_wp_reset_query
+		$post = $_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 	}
 
 	/**
@@ -331,6 +333,7 @@ class Front {
 		global $post;
 		$_post = empty( $post ) ? $post : clone $post;
 
+		// phpcs:ignore WordPress.WP.DiscouragedFunctions.query_posts_query_posts
 		query_posts(
 			array(
 				'page_id'     => $page_id,
@@ -347,8 +350,9 @@ class Front {
 			}
 		}
 
-		wp_reset_query();
-		$post = $_post;
+		wp_reset_query(); // phpcs:ignore WordPress.WP.DiscouragedFunctions.wp_reset_query_wp_reset_query
+		$post = $_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+
 		return $description;
 	}
 
@@ -367,6 +371,7 @@ class Front {
 		global $post;
 		$_post = empty( $post ) ? $post : clone $post;
 
+		// phpcs:ignore WordPress.WP.DiscouragedFunctions.query_posts_query_posts
 		query_posts(
 			array(
 				'page_id'     => $page_id,
@@ -380,8 +385,8 @@ class Front {
 			$image = $ogp->get_image();
 		}
 
-		wp_reset_query();
-		$post = $_post;
+		wp_reset_query(); // phpcs:ignore WordPress.WP.DiscouragedFunctions.wp_reset_query_wp_reset_query
+		$post = $_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		return $image;
 	}
@@ -405,6 +410,7 @@ class Front {
 		global $post;
 		$_post = empty( $post ) ? $post : clone $post;
 
+		// phpcs:ignore WordPress.WP.DiscouragedFunctions.query_posts_query_posts
 		query_posts(
 			array(
 				'page_id'     => $page_id,
@@ -420,8 +426,8 @@ class Front {
 			}
 		}
 
-		wp_reset_query();
-		$post = $_post;
+		wp_reset_query(); // phpcs:ignore WordPress.WP.DiscouragedFunctions.wp_reset_query_wp_reset_query
+		$post = $_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		return $description;
 	}
@@ -441,6 +447,7 @@ class Front {
 		global $post;
 		$_post = empty( $post ) ? $post : clone $post;
 
+		// phpcs:ignore WordPress.WP.DiscouragedFunctions.query_posts_query_posts
 		query_posts(
 			array(
 				'page_id'     => $page_id,
@@ -453,8 +460,8 @@ class Front {
 			$thumbnail = \Inc2734\WP_SEO\Helper::get_the_thumbnail( $page_id );
 		}
 
-		wp_reset_query();
-		$post = $_post;
+		wp_reset_query(); // phpcs:ignore WordPress.WP.DiscouragedFunctions.wp_reset_query_wp_reset_query
+		$post = $_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		return $thumbnail;
 	}

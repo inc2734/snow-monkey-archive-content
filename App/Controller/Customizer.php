@@ -57,7 +57,7 @@ class Customizer {
 				}
 			}
 
-			include_once( $file );
+			include_once $file;
 		}
 	}
 }
