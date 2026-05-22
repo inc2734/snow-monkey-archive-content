@@ -20,8 +20,6 @@
 
 namespace Snow_Monkey\Plugin\ArchiveContent;
 
-use Snow_Monkey\Plugin\ArchiveContent\App\Helper;
-
 define( 'SNOW_MONKEY_ARCHIVE_CONTENT_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'SNOW_MONKEY_ARCHIVE_CONTENT_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
 
@@ -132,61 +130,17 @@ new Bootstrap();
  * Uninstall callback function.
  */
 function uninstall_callback() {
-	$categories = Helper::get_terms(
-		array(
-			'taxonomy'   => 'category',
-			'hide_empty' => false,
-		)
-	);
-
-	$post_tags = Helper::get_terms(
-		array(
-			'taxonomy'   => 'post_tag',
-			'hide_empty' => false,
-		)
-	);
-
-	$terms             = array_merge( $categories, $post_tags );
-	$custom_post_types = Helper::get_custom_post_types();
-	$users             = Helper::get_users();
-
-	$taxonomies = Helper::get_taxonomies();
-	foreach ( $taxonomies as $_taxonomy ) {
-		$terms = array_merge(
-			$terms,
-			Helper::get_terms(
-				array(
-					'taxonomy'   => $_taxonomy,
-					'hide_empty' => false,
-				)
-			)
-		);
+	$theme_mods = get_theme_mods();
+	if ( ! is_array( $theme_mods ) ) {
+		return;
 	}
 
-	foreach ( $terms as $term ) {
-		remove_theme_mod( Helper::get_term_meta_name( 'page-id', $term ) );
-		remove_theme_mod( Helper::get_term_meta_name( 'page-id-2', $term ) );
-		remove_theme_mod( Helper::get_term_meta_name( 'display-title', $term ) );
-		remove_theme_mod( Helper::get_term_meta_name( 'remove-top-margin', $term ) );
-	}
+	foreach ( array_keys( $theme_mods ) as $key ) {
+		if ( 0 !== strpos( $key, 'snow-monkey-archive-content/' ) ) {
+			continue;
+		}
 
-	foreach ( $custom_post_types as $custom_post_type ) {
-		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id', $custom_post_type ) );
-		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'page-id-2', $custom_post_type ) );
-		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'display-title', $custom_post_type ) );
-		remove_theme_mod( Helper::get_custom_post_archive_meta_name( 'remove-top-margin', $custom_post_type ) );
+		remove_theme_mod( $key );
 	}
-
-	foreach ( $users as $user ) {
-		remove_theme_mod( Helper::get_author_meta_name( 'page-id', $user ) );
-		remove_theme_mod( Helper::get_author_meta_name( 'page-id-2', $user ) );
-		remove_theme_mod( Helper::get_author_meta_name( 'display-title', $user ) );
-		remove_theme_mod( Helper::get_author_meta_name( 'remove-top-margin', $user ) );
-	}
-
-	remove_theme_mod( Helper::get_home_meta_name( 'page-id' ) );
-	remove_theme_mod( Helper::get_home_meta_name( 'page-id-2' ) );
-	remove_theme_mod( Helper::get_home_meta_name( 'display-title' ) );
-	remove_theme_mod( Helper::get_home_meta_name( 'remove-top-margin' ) );
 }
-register_uninstall_hook( __FILE__, 'uninstall_callback' );
+register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall_callback' );
