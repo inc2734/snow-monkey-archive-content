@@ -1,17 +1,17 @@
 {
 	"engines": {
-		"node": "^22.11.0 || ^24.11.0 || >=26.0.0",
-		"npm": ">=10.2.3"
+		"node": ">=24.22.1",
+		"npm": ">=11.18.0"
 	},
 	"volta": {
-		"node": "24.18.1"
+		"node": "24.22.1"
 	},
 	"author": "inc2734",
 	"license": "GPL-2.0+",
 	"dependencies": {},
 	"devDependencies": {
-		"@wordpress/env": "^11.13.0",
-		"@wordpress/browserslist-config": "^6.53.0",
+		"@wordpress/env": "^12.0.0",
+		"@wordpress/browserslist-config": "^7.0.0",
 		"autoprefixer": "^10.5.4",
 		"cssnano": "^8.0.6",
 		"npm-run-all": "^4.1.5",
@@ -39,16 +39,17 @@
 		"wp": "npm run cli wp",
 		"composer": "wp-env run --env-cwd=\"wp-content/plugins/snow-monkey-archive-content\" cli composer",
 		"test:php:start": "wp-env start --config=.wp-env.tests.json",
+		"test:php:stop": "wp-env stop --config=.wp-env.tests.json",
 		"test-composer": "wp-env run --config=.wp-env.tests.json --env-cwd=\"wp-content/plugins/snow-monkey-archive-content\" cli composer",
-		"pretest:php:lint": "npm run test:php:start && npm run test-composer install",
-		"test:php:lint": "wp-env run --config=.wp-env.tests.json --env-cwd=\"wp-content/plugins/snow-monkey-archive-content\" wordpress -- vendor/bin/phpcs --standard=.phpcs.xml.dist",
-		"posttest:php:lint": "wp-env stop --config=.wp-env.tests.json",
-		"test:lint:php": "npm run test:php:lint",
+		"pretest:php:lint": "npm run test:php:start && npm run test-composer install -- --no-interaction",
+		"test:php:lint": "npm run test-composer lint",
+		"posttest:php:lint": "npm run test:php:stop",
+		"test:lint:php": "npm run test:php:lint || (status=$?; npm run test:php:stop; exit $status)",
 		"test:lint": "run-s test:lint:*",
-		"pretest:php:unit": "npm run test:php:start && npm run test-composer install && npm run test-composer install-theme",
-		"test:php:unit": "wp-env run --config=.wp-env.tests.json --env-cwd=\"wp-content/plugins/snow-monkey-archive-content\" wordpress -- vendor/bin/phpunit -c .phpunit.xml.dist --verbose",
-		"posttest:php:unit": "wp-env stop --config=.wp-env.tests.json",
-		"test:unit:php": "npm run test:php:unit",
+		"pretest:php:unit": "npm run test:php:start && npm run test-composer install -- --no-interaction && npm run test-composer install-theme",
+		"test:php:unit": "wp-env run --config=.wp-env.tests.json --env-cwd=\"wp-content/plugins/snow-monkey-archive-content\" wordpress vendor/bin/phpunit -c .phpunit.xml.dist --verbose",
+		"posttest:php:unit": "npm run test:php:stop",
+		"test:unit:php": "npm run test:php:unit || (status=$?; npm run test:php:stop; exit $status)",
 		"test:unit": "run-s test:unit:*",
 		"test": "run-s test:lint test:unit",
 		"clean:css": "rimraf dist/css && mkdir -p dist/css",
@@ -56,7 +57,7 @@
 		"css:app": "sass src/css/app.scss dist/css/app.css && postcss dist/css/app.css -r -c=postcss.config.js",
 		"css": "npm run clean:css && npm-run-all -p css:*",
 		"build": "npm-run-all -p css",
-		"zip:pack": "rsync -a --exclude='/vendor' --exclude='/node_modules' --exclude='.*' --exclude='*.config.js' --exclude='*.xml.dist' --exclude='*.ruleset.xml' --exclude='/bin' --exclude='/tests' --exclude='package*.json' . snow-monkey-archive-content && wp-env start && npm run composer install -- --no-dev -d snow-monkey-archive-content",
+		"zip:pack": "rsync -a --exclude='/vendor' --exclude='/node_modules' --exclude='.*' --exclude='*.config.js' --exclude='*.xml.dist' --exclude='*.ruleset.xml' --exclude='/bin' --exclude='/tests' --exclude='package*.json' . snow-monkey-archive-content && wp-env start && npm run composer install -- --no-interaction --no-dev -d snow-monkey-archive-content",
 		"zip:archive": "zip -9 -qmr snow-monkey-archive-content.zip snow-monkey-archive-content",
 		"zip": "npm run clean:zip && npm run zip:pack && npm run zip:archive",
 		"make-pot": "wp-env start && npm run wp i18n -- make-pot . ./languages/snow-monkey-archive-content.pot -- --exclude=.*,src",
